@@ -8,9 +8,11 @@ Plese note: these tests are a work in progress and are not yet complete.  Please
 
 - Install the dependencies: `npm install`
 - Run the tests: `npx playwright test --ui`
+  - Please see the below section on adding test identifiers for more information on how to use Playwright to identify elements.
 
 ## Adding Test Identifiers
-Since everyone's project will be different, we can add attributes to elements so that Playwright can easily identify the interactive elements.
+
+Since everyone's project will be different, we can add attributes to elements so that Playwright can easily identify your interactive elements.
 
 To add test identifiers, use the `data-testid` attribute.  To find the identifiers you'll need, you can check the test spec files in the `tests` directory.
 
