@@ -15,8 +15,10 @@ This repository contains the test specs for the M5 project.  These tests are wri
 - If you're testing locally, start by running your backend and frontend.
   - You'll need ensure your app is running before running the test specs.
 
+> ⚠️ Before running the tests, please read the below section on adding test identifiers.
+
 - To run the test specs use: `npx playwright test --ui`
-  - Please see the below section on adding test identifiers for more information on how to use Playwright to identify elements.
+
 
 ## Adding Test Identifiers ⭐
 
