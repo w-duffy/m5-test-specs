@@ -6,8 +6,12 @@ Plese note: these tests are a work in progress and are not yet complete.  Please
 
 ## Setup and Usage
 
+
+
 - Install the dependencies: `npm install`
-- Run the tests: `npx playwright test --ui`
+- Copy the `.env.example` file to a `.env` and add your test url.  I currently have the test url set to `http://localhost:5173`  but you can change this to your Render url.
+- If testing locally, start by running your backend and frontend.  You'll run the test specs while your app is running.
+- To run the test specs use: `npx playwright test --ui`
   - Please see the below section on adding test identifiers for more information on how to use Playwright to identify elements.
 
 ## Adding Test Identifiers
