@@ -27,39 +27,43 @@ To add test identifiers, use the `data-testid` attribute.  To find the identifie
 Here is an example where identifiers are added to the login form:
 
 ```js
-<>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username or Email
-          <input
-            type="text"
-            data-testid='credential-input' // Identifier
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            data-testid='password-input' // Identifier
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button
-        type="submit"
-        data-testid='login-button' // Identifier
-        >
-        Log In
-        </button>
-      </form>
-</>
+<form onSubmit={handleSubmit}>
+  <label>
+    Username or Email
+    <input
+      type="text"
+      data-testid='credential-input' // Identifier
+      value={credential}
+      onChange={(e) => setCredential(e.target.value)}
+      required
+    />
+  </label>
+  <label>
+    Password
+    <input
+      type="password"
+      data-testid='password-input' // Identifier
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      required
+    />
+  </label>
+  {errors.credential && <p>{errors.credential}</p>}
+  <button
+  type="submit"
+  data-testid='login-button' // Identifier
+  >
+  Log In
+  </button>
+</form>
 ```
 
+And here's how you'll see these used in the test specs:
+```js
+await page.getByTestId('credential-input').fill('demo@user.io')
+await page.getByTestId('password-input').fill('password')
+await page.getByTestId('login-button').click()
+```
 
 
 ## Quickstart -- Working with UI Mode
