@@ -2,7 +2,7 @@
 
 This repository contains the test specs for the M5 project.  These tests are written using [Playwright](https://playwright.dev/docs/intro).
 
-⭐ Note: Since everyone's project will be different, the tests depend on data attributes to identify elements .
+⭐ Note: Since everyone's project will be different, the tests depend on data attributes to identify elements.  Please see the below for more details.
 
 > ⚠️ These tests are currently a work in progress. Please report any issues you find.  Thank you!
 
