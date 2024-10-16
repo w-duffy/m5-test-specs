@@ -99,6 +99,18 @@ export async function createSpot(page) {
   await page.getByRole("button", { name: "Create Spot" }).click();
 }
 
+export async function createReview(page) {
+  let reviewDetails = generateUniqueUsername()
+  await signUpUser(page);
+  await page.getByTestId("spot-tile").first().click();
+  await page.getByTestId("review-button").click();
+  await page
+    .getByPlaceholder("Leave your review here...")
+    .fill(`This is an awesome review comment for testing! ${reviewDetails}`);
+  await page.getByTestId("star-rating").locator("path").nth(4).click();
+
+  await page.getByRole("button", { name: "Submit Your Review" }).click();
+}
 
 export async function logOutUser(page) {
   await page.getByTestId("user-menu-button").click();
