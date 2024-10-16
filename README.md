@@ -1,23 +1,34 @@
 # M5 Test Specs (Early Access)
 
+> ⚠️ These tests are currently a work in progress. Please report any issues you find.  Thank you!
+
 This repository contains the test specs for the M5 project.  These tests are written using [Playwright](https://playwright.dev/docs/intro).
 
 ⭐ Note: Since everyone's project will be different, the tests depend on data attributes to identify elements.  Please see the below for more details.
 
-> ⚠️ These tests are currently a work in progress. Please report any issues you find.  Thank you!
 
 ## Setup and Usage
 
-- Install the dependencies: `npm install`
-- Copy the `.env.example` file to a `.env` and add your test url: `cp .env.example .env`
-  - I currently have the test url set to `http://localhost:5173`,but you can change this to your Render url.
+### Install the Dependencies
+- `npm install`
 
-- If you're testing locally, start by running your backend and frontend.
-  - You'll need ensure your app is running before running the test specs.
+### Add Environment Variables
+Copy the `.env.example` file to a `.env` and add your test url:
+- `cp .env.example .env`
 
-> ⚠️ Before running the tests, please read the below section on adding test identifiers.
 
-- To run the test specs use: `npx playwright test --ui`
+### Local vs Prod Testing
+If you're testing locally, start by running your backend and frontend.
+- You'll need ensure your app is running before running the test specs.
+
+The `.env` should point to either your local dev server, or your Render URL.
+- The starter comes with the `STUDENT_URL` set to `http://localhost:5173`.
+- You can change this to your Render url.  Note the lack of a trailing slash.
+
+
+### Running the tests
+> ⚠️ Before running the below command, please read the below section on adding test identifiers.
+- `npx playwright test --ui`
 
 
 ## Adding Test Identifiers ⭐
@@ -94,4 +105,4 @@ Rerun failed tests by clicking the green arrow circled in the screenshot below.
 
 ## Report Issues
 
-If you find any issues with the tests, please DM me the details.
+If you find any issues with the tests, please DM me the details 🙏
