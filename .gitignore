@@ -6,3 +6,4 @@ node_modules/
 .env
 .github
 tests/07-view-rating-and-reviews.spec.ts
+tests/12-delete-a-spot.spec.ts

@@ -94,13 +94,15 @@ test.describe('Feature: Sign Up', () => {
 
     test('The "Sign up" button should be disabled when the "Password" field is less than 6 characters.', async ({ page }) => {
         await page.getByText('Sign up').click();
-        const fields = ['first-name', 'last-name', 'email', 'username', 'confirm-password'];
+        const fields = ['first-name', 'last-name', 'email', 'username'];
         for (const field of fields) {
             await page.getByTestId(`${field}-input`).fill('testingALongString');
         }
         await page.getByTestId('password-input').fill('12345');
+        await page.getByTestId('confirm-password-input').fill('12345');
         await expect(page.getByTestId('form-sign-up-button')).toBeDisabled();
         await page.getByTestId('password-input').fill('123456');
+        await page.getByTestId('confirm-password-input').fill('123456');
         await expect(page.getByTestId('form-sign-up-button')).toBeEnabled();
     });
 
