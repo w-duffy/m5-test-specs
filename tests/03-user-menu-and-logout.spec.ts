@@ -1,8 +1,8 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 test.describe('Feature: User Menu and Log Out', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL);
+        await page.goto(process.env.STUDENT_URL!);
 
         await page.getByTestId('user-menu-button').click();
         await page.getByText('Log in').click();
@@ -89,12 +89,12 @@ test.describe('Feature: User Menu and Log Out', () => {
         const buttonBox = await userMenuButton.boundingBox();
         const menuBox = await userDropdownMenu.boundingBox();
 
-        expect(buttonBox.x + buttonBox.width).toBeCloseTo(page.viewportSize().width, -2);
-        expect(buttonBox.y).toBeLessThan(100);
+        expect(buttonBox?.x! + buttonBox?.width!).toBeCloseTo(page.viewportSize()?.width!, -2);
+        expect(buttonBox?.y!).toBeLessThan(100);
 
-        expect(menuBox.y).toBeGreaterThan(buttonBox.y + buttonBox.height);
+        expect(menuBox?.y).toBeGreaterThan(buttonBox?.y! + buttonBox?.height!);
 
-        expect(menuBox.x + menuBox.width).toBeCloseTo(buttonBox.x + buttonBox.width, -2);
+        expect(menuBox?.x! + menuBox?.width!).toBeCloseTo(buttonBox?.x! + buttonBox?.width!, -2);
 
         const greeting = await page.getByText('Hello, Demo');
         const email = await page.getByText('demo@user.io');
@@ -104,7 +104,7 @@ test.describe('Feature: User Menu and Log Out', () => {
         const emailBox = await email.boundingBox();
         const logoutBox = await logoutButton.boundingBox();
 
-        expect(greetingBox.y).toBeLessThan(emailBox.y);
-        expect(emailBox.y).toBeLessThan(logoutBox.y);
+        expect(greetingBox?.y).toBeLessThan(emailBox?.y!);
+        expect(emailBox?.y).toBeLessThan(logoutBox?.y!);
     });
 });

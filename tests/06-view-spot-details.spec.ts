@@ -1,8 +1,8 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 test.describe('Feature: View Spot Details', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL);
+        await page.goto(process.env.STUDENT_URL!);
         const firstSpot = page.getByTestId('spot-tile').first();
 
         const anchorTag = await firstSpot.locator('a');
@@ -64,32 +64,32 @@ test.describe('Feature: View Spot Details', () => {
 
         const spotName = await page.getByTestId('spot-name').boundingBox();
         const location = await page.getByTestId('spot-location').boundingBox();
-        expect(spotName.y).toBeLessThan(location.y);
+        expect(spotName?.y).toBeLessThan(location?.y!);
 
 
         const largeImage = await page.getByTestId('spot-large-image').boundingBox();
-        expect(largeImage.y).toBeGreaterThan(location.y);
+        expect(largeImage?.y).toBeGreaterThan(location?.y!);
 
 
         const smallImages = await page.getByTestId('spot-small-image').all();
         const firstSmallImage = await smallImages[0].boundingBox();
-        expect(firstSmallImage.x).toBeGreaterThan(largeImage.x + largeImage.width);
+        expect(firstSmallImage?.x).toBeGreaterThan(largeImage?.x! + largeImage?.width!);
 
 
         const host = await page.getByTestId('spot-host').boundingBox();
-        expect(host.y).toBeGreaterThan(largeImage.y + largeImage.height);
+        expect(host?.y).toBeGreaterThan(largeImage?.y! + largeImage?.height!);
 
 
         const description = await page.getByTestId('spot-description').boundingBox();
-        expect(description.y).toBeGreaterThan(host.y + host.height);
+        expect(description?.y).toBeGreaterThan(host?.y! + host?.height!);
 
 
         const calloutBox = await page.getByTestId('spot-callout-box').boundingBox();
         const viewportSize = page.viewportSize();
-        expect(calloutBox.x + calloutBox.width).toBeCloseTo(viewportSize.width, -3);
+        expect(calloutBox?.x!+ calloutBox?.width!).toBeCloseTo(viewportSize?.width!, -3);
 
 
         const reserveButton = await page.getByTestId('reserve-button').boundingBox();
-        expect(reserveButton.y + reserveButton.height).toBeCloseTo(calloutBox.y + calloutBox.height, -2);
+        expect(reserveButton?.y! + reserveButton?.height!).toBeCloseTo(calloutBox?.y! + calloutBox?.height!, -2);
     });
 });

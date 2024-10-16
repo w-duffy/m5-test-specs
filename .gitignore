@@ -5,4 +5,4 @@ node_modules/
 /playwright/.cache/
 .env
 .github
-tests/07-view-rating-and-reviews.spec.js
+tests/07-view-rating-and-reviews.spec.ts

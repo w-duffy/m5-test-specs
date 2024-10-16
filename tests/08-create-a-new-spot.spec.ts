@@ -1,8 +1,7 @@
-const { test, expect } = require('@playwright/test');
-
+import { test, expect } from '@playwright/test';
 test.describe('Feature: Create a New Spot', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL);
+        await page.goto(process.env.STUDENT_URL!);
 
         await page.getByTestId('user-menu-button').click();
         await page.getByText('Log in').click();
@@ -13,14 +12,14 @@ test.describe('Feature: Create a New Spot', () => {
     });
 
     test("There should be a 'Create a New Spot' button in the navigation bar to the left of the User Menu button for logged-in users", async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL);
+        await page.goto(process.env.STUDENT_URL!);
         const createSpotButton = page.getByText('Create a New Spot');
         await expect(createSpotButton).toBeVisible();
 
         const userMenuButton = page.getByTestId('user-menu-button');
         const createSpotBox = await createSpotButton.boundingBox();
         const userMenuBox = await userMenuButton.boundingBox();
-        expect(createSpotBox.x).toBeLessThan(userMenuBox.x);
+        expect(createSpotBox?.x).toBeLessThan(userMenuBox?.x!);
     });
     //
 
@@ -123,7 +122,7 @@ test.describe('Feature: Create a New Spot', () => {
 
         await page.getByLabel('Country').fill('Test Country');
 
-        await page.goto(process.env.STUDENT_URL);
+        await page.goto(process.env.STUDENT_URL!);
 
         await page.getByText('Create a New Spot').click();
 
@@ -140,12 +139,12 @@ test.describe('Feature: Create a New Spot', () => {
         const section5 = await page.getByTestId('section-5').boundingBox();
         const submitButton = await page.locator('button[type="submit"]').boundingBox();
 
-        expect(formTitle.y).toBeLessThan(section1.y);
-        expect(section1.y).toBeLessThan(section2.y);
-        expect(section2.y).toBeLessThan(section3.y);
-        expect(section3.y).toBeLessThan(section4.y);
-        expect(section4.y).toBeLessThan(section5.y);
-        expect(section5.y).toBeLessThan(submitButton.y);
+        expect(formTitle?.y).toBeLessThan(section1?.y!);
+        expect(section1?.y).toBeLessThan(section2?.y!);
+        expect(section2?.y).toBeLessThan(section3?.y!);
+        expect(section3?.y).toBeLessThan(section4?.y!);
+        expect(section4?.y).toBeLessThan(section5?.y!);
+        expect(section5?.y).toBeLessThan(submitButton?.y!);
     });
 
 

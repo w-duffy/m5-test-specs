@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 function createUniqueUser() {
     return {
       firstName: "Fakey",
@@ -18,7 +18,7 @@ function createUniqueUser() {
   }
 test.describe('Feature: Sign Up', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL);
+        await page.goto(process.env.STUDENT_URL!);
         await page.getByTestId('user-menu-button').click();
     });
 
@@ -33,7 +33,7 @@ test.describe('Feature: Sign Up', () => {
         const signUpBox = await signUpButton.boundingBox();
         const loginBox = await loginButton.boundingBox();
 
-        expect(signUpBox.x).toBeLessThan(loginBox.x);
+        expect(signUpBox?.x).toBeLessThan(loginBox?.x!);
     });
 
     test('Upon clicking "Sign up" the sign-up modal pop-up window should open and display a new user account form.', async ({ page }) => {
@@ -60,7 +60,7 @@ test.describe('Feature: Sign Up', () => {
         const lastInputBoxBound = await lastInputBox.boundingBox();
         const signUpButtonBound = await signUpButton.boundingBox();
 
-        expect(signUpButtonBound.y).toBeGreaterThan(lastInputBoxBound.y + lastInputBoxBound.height);
+        expect(signUpButtonBound?.y).toBeGreaterThan(lastInputBoxBound?.y! + lastInputBoxBound?.height!);
     });
 
     test('The "Sign up" button should be disabled when any field is empty.', async ({ page }) => {
@@ -209,8 +209,8 @@ test.describe('Feature: Sign Up', () => {
         const modalBox = await modal.boundingBox();
 
         const viewportSize = page.viewportSize();
-        expect(modalBox.x).toBeCloseTo((viewportSize.width - modalBox.width) / 2, -2);
-        expect(modalBox.y).toBeCloseTo((viewportSize.height - modalBox.height) / 2, -2);
+        expect(modalBox?.x).toBeCloseTo((viewportSize?.width! - modalBox?.width!) / 2, -2);
+        expect(modalBox?.y).toBeCloseTo((viewportSize?.height! - modalBox?.height!) / 2, -2);
 
         const formElements = ['first-name-input', 'last-name-input', 'email-input', 'username-input', 'password-input', 'confirm-password-input', 'form-sign-up-button'];
         for (let i = 1; i < formElements.length; i++) {
@@ -218,7 +218,7 @@ test.describe('Feature: Sign Up', () => {
             const currentElement = page.getByTestId(formElements[i]);
             const prevBox = await prevElement.boundingBox();
             const currentBox = await currentElement.boundingBox();
-            expect(currentBox.y).toBeGreaterThan(prevBox.y);
+            expect(currentBox?.y).toBeGreaterThan(prevBox?.y!);
         }
     });
 });
