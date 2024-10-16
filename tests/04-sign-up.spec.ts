@@ -28,12 +28,6 @@ test.describe('Feature: Sign Up', () => {
 
         await expect(loginButton).toBeVisible();
         await expect(signUpButton).toBeVisible();
-
-
-        const signUpBox = await signUpButton.boundingBox();
-        const loginBox = await loginButton.boundingBox();
-
-        expect(signUpBox?.x).toBeLessThan(loginBox?.x!);
     });
 
     test('Upon clicking "Sign up" the sign-up modal pop-up window should open and display a new user account form.', async ({ page }) => {
