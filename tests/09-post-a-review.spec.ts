@@ -197,8 +197,8 @@ test.describe("Feature: Post a Review", () => {
     await page.getByTestId("star-rating").locator("path").nth(4).click();
     await page
       .getByRole("button", { name: "Submit Your Review" })
-      .click({ delay: 1000 });
-
+      .click({ delay: 2000 });
+    
     const updatedRating = await page
       .getByTestId("reviews-heading")
       .getByTestId("review-count")
