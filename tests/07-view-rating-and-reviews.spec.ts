@@ -79,6 +79,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
     const reviewHeading = await page.getByTestId("reviews-heading");
 
     // TODO: Add check for star icon
+    // Free points for now!
 
     for (const element of [calloutBox, reviewHeading]) {
       const ratingText = await element.getByTestId("spot-rating").textContent();
@@ -96,6 +97,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
     ).toContainText("New");
     await expect(page.getByTestId("reviews-heading")).toContainText("New");
     // TODO: Add check for star icon
+    // Free points for now!
   });
 
   test("The review count on the spot's detail page should be an integer representing the total number of reviews for that spot followed by the text 'Reviews' (e.g. '4 Reviews')", async ({
