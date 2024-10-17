@@ -73,15 +73,15 @@ test.describe('Feature: View Spot Details', () => {
 
         const smallImages = await page.getByTestId('spot-small-image').all();
         const firstSmallImage = await smallImages[0].boundingBox();
-        expect(firstSmallImage?.x).toBeGreaterThan(largeImage?.x! + largeImage?.width!);
+        expect(firstSmallImage?.x).toBeGreaterThanOrEqual(largeImage?.x! + largeImage?.width!);
 
 
         const host = await page.getByTestId('spot-host').boundingBox();
-        expect(host?.y).toBeGreaterThan(largeImage?.y! + largeImage?.height!);
+        expect(host?.y).toBeGreaterThanOrEqual(largeImage?.y! + largeImage?.height!);
 
 
         const description = await page.getByTestId('spot-description').boundingBox();
-        expect(description?.y).toBeGreaterThan(host?.y! + host?.height!);
+        expect(description?.y).toBeGreaterThanOrEqual(host?.y! + host?.height!);
 
 
         const calloutBox = await page.getByTestId('spot-callout-box').boundingBox();

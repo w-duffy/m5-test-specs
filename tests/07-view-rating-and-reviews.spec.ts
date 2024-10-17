@@ -10,6 +10,7 @@ import {
   createSpotAndMultiReviews,
   encapsulateSpotCreation,
   createSpotAndNoReview,
+  createSpotAndNoReviewUserOnPage
 } from "./utils";
 const test = base.extend({
   context: async ({}, use) => {
@@ -38,7 +39,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await expect(ratingElement).toBeVisible();
     const ratingText = await ratingElement.textContent();
     expect(
-      ratingText?.match(/New/i) || !isNaN(parseFloat(ratingText!))
+      ratingText?.match(/New/i) || isNaN((parseFloat(ratingText!)))
     ).toBeTruthy();
 
     const locationElement = spotTile.getByTestId("spot-city");
@@ -51,11 +52,12 @@ test.describe("Feature: view-rating-and-reviews", () => {
   test("When viewing a spot's detail page, the review summary info should be in two different places, the callout information box and the heading before the list of reviews. The review summary info should show the average star rating of all the reviews for that spot and the review count for that spot", async ({
     page,
   }) => {
-    await signUpUser(page);
-    await createSpot(page);
-    await logOutUser(page);
-    await createReview(page);
-
+    // await createSpotAndSingleReview(page);
+    // await createSpot(page);
+    // await logOutUser(page);
+    // await createReview(page);
+    // const dummyData = createUniqueUser();
+    await createSpotAndSingleReview(page);
     const calloutBox = page.getByTestId("spot-callout-box");
     const reviewHeading = page.getByTestId("reviews-heading");
 

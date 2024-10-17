@@ -76,6 +76,7 @@ test.describe("Feature: Manage Spots", () => {
     const spotTile = page.getByTestId("spot-tile").first();
     const anchorTag = await spotTile.locator("a").first();
     const spotId = await anchorTag.getAttribute("href");
+    // await page.getByTestId("spot-link").first().click();
 
     await spotTile.click();
 

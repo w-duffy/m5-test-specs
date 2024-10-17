@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-
+import { faviconLocator, logoLocator, profileButtonLocator } from './contants';
 test.describe('Application Header', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(process.env.STUDENT_URL!);
@@ -7,12 +7,12 @@ test.describe('Application Header', () => {
 
   test('On every page of the site, the browser tab shows the app name and fav icon', async ({ page }) => {
     await expect(page).toHaveTitle(/.*/);
-    await expect(page.getByTestId('favicon')).toBeAttached()
+    await expect(page.getByTestId(faviconLocator)).toBeAttached()
 
   });
 
   test("On every page of the site, the logo is on the top left of the page. The logo should have the attribute: data-testid='logo'", async ({ page }) => {
-    const logo = page.getByTestId('logo');
+    const logo = page.getByTestId(logoLocator);
 
     await expect(logo).toBeVisible();
 
@@ -23,10 +23,10 @@ test.describe('Application Header', () => {
   test("As the browser is resized, the header's width adjusts dynamically so the logo stays on the left, and the auth/user buttons stay on the right.", async ({ page }) => {
     await page.setViewportSize({ width: 1200, height: 800 });
 
-    const logo = page.getByTestId('logo');
+    const logo = page.getByTestId(logoLocator);
     await expect(logo).toBeVisible();
 
-    const authButtons = page.getByTestId('user-menu-button');
+    const authButtons = page.getByTestId(profileButtonLocator);
     await expect(authButtons).toBeVisible();
 
     await page.setViewportSize({ width: 768, height: 800 });
@@ -36,8 +36,8 @@ test.describe('Application Header', () => {
   });
 
   test('The layout and element positioning is equivalent to the wireframes.', async ({ page }) => {
-    const logo = page.getByTestId('logo');
-    const authButtons = page.getByTestId('user-menu-button');
+    const logo = page.getByTestId(logoLocator);
+    const authButtons = page.getByTestId(profileButtonLocator);
 
     const logoBox = await logo.boundingBox();
     const authBox = await authButtons.boundingBox();

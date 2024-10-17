@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/test";
-import { createSpot, signUpUser, createReview, logOutUser, loginDemoUser } from "./utils";
+import { createSpot, signUpUser, createReview, logOutUser, loginDemoUser, createSpotAndSingleReview, createSpotAndSingleReviewLogInDemoUser } from "./utils";
 
 test.describe("Feature: Delete a Review", () => {
   test.beforeEach(async ({ page }) => {
@@ -7,34 +7,21 @@ test.describe("Feature: Delete a Review", () => {
   });
 
   test('On a review that the logged-in user has posted, there should be a "Delete" button below the review\'s comment.', async ({ page }) => {
-    await signUpUser(page);
-    await createSpot(page);
-    await logOutUser(page);
-    await createReview(page);
-
+    await createSpotAndSingleReview(page);
     const deleteButton = page.getByTestId('review-list').first().getByRole('button', { name: 'Delete' });
     await expect(deleteButton).toBeVisible();
   });
 
   test('On a review that the logged-in user did NOT post, the "Delete" button should be hidden.', async ({ page }) => {
-    await signUpUser(page);
-    await createSpot(page);
-    await logOutUser(page);
-    await createReview(page);
-    await logOutUser(page);
-    await loginDemoUser(page);
+    await createSpotAndSingleReviewLogInDemoUser(page);
 
-    await page.getByTestId('spot-tile').first().click();
     const deleteButton = page.getByTestId('review-list').first().getByRole('button', { name: 'Delete' });
     await expect(deleteButton).not.toBeVisible();
   });
 
   test('Clicking the "Delete" button on a review will open a confirmation modal popup window that should contain: a Title: "Confirm Delete", a Message: "Are you sure you want to delete this review?", a Red button: "Yes (Delete Review)", and a Dark grey button: "No (Keep Review)".', async ({ page }) => {
-    await signUpUser(page);
-    await createSpot(page);
-    await logOutUser(page);
-    await createReview(page);
 
+await createSpotAndSingleReview(page);
     await page.getByTestId('review-list').first().getByRole('button', { name: 'Delete' }).click();
 
     const modal = page.getByTestId('delete-review-modal');
@@ -51,14 +38,12 @@ test.describe("Feature: Delete a Review", () => {
   });
 
   test('Clicking the "Delete" button on a review should not delete the review. Clicking the "Yes (Delete Review)" button in the confirmation modal should delete the review.', async ({ page }) => {
-    await signUpUser(page);
-    await createSpot(page);
-    await logOutUser(page);
-    await createReview(page);
 
-    await page.waitForTimeout(1000);
+    await createSpotAndSingleReview(page);
 
-    const initialReviewCount = await page.getByTestId('review-list').count();
+    await page.waitForTimeout(2000);
+
+    const initialReviewContent = await page.getByTestId('review-list').first().textContent();
 
     await page.getByTestId('review-list').first().getByRole('button', { name: 'Delete' }).click();
 
@@ -66,25 +51,22 @@ test.describe("Feature: Delete a Review", () => {
     await expect(modal).toBeVisible();
 
     await page.mouse.click(0,0)
+    await page.waitForTimeout(2000);
 
-    const reviewCountAfterCancel = await page.getByTestId('review-list').count();
-    expect(reviewCountAfterCancel).toBe(initialReviewCount);
+    const reviewContentAfterCancel = await page.getByTestId('review-list').first().textContent()
+    expect(reviewContentAfterCancel).toBe(initialReviewContent);
 
     await page.getByTestId('review-list').first().getByRole('button', { name: 'Delete' }).click();
     await modal.getByRole('button', { name: 'Yes (Delete Review)' }).click();
 
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(2000);
+    await expect (page.getByText(initialReviewContent!)).not.toBeVisible();
 
-    const reviewCountAfterDelete = await page.getByTestId('review-list').count();
-    expect(reviewCountAfterDelete).toBe(initialReviewCount - 1);
   });
 
   test('After a review is deleted, it should be removed from the review list in the in the spot\'s detail page. No refresh should be necessary.', async ({ page }) => {
-    await signUpUser(page);
-    await createSpot(page);
-    await logOutUser(page);
-    await createReview(page);
 
+    await createSpotAndSingleReview(page);
     await page.waitForTimeout(1000);
 
     const reviewText = await page.getByTestId('review-list').first().getByTestId('review-text').first().textContent();
@@ -99,10 +81,8 @@ test.describe("Feature: Delete a Review", () => {
   });
 
   test('The layout and element positioning is equivalent to the wireframes', async ({ page }) => {
-    await signUpUser(page);
-    await createSpot(page);
-    await logOutUser(page);
-    await createReview(page);
+
+    await createSpotAndSingleReview(page);
     await page.waitForTimeout(1000);
 
     const reviewItem = page.getByTestId('review-list').first();
