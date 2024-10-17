@@ -57,10 +57,12 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
   }) => {
     const firstSpot = page.getByTestId(spotTileLocator).first();
 
-    const anchorTag = await firstSpot.locator("a");
-    const spotId = await anchorTag.getAttribute("href");
+    // Using React Router's Link instead of a "div with an onClick + navigate" is ideal
+    const linkToSpotPage = await firstSpot.getByTestId("spot-link");
+    // spotId should be the path to your spots like `/spots/1` so that should be href's value here
+    const spotId = await linkToSpotPage.getAttribute("href"); // the href here can be added to your ele that has an onClick if you didn't use Link
 
-    await anchorTag.click();
+    await linkToSpotPage.click();
 
     await expect(page).toHaveURL(`${process.env.STUDENT_URL}${spotId}`);
   });

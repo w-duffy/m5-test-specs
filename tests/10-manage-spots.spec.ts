@@ -74,8 +74,9 @@ test.describe("Feature: Manage Spots", () => {
     await page.goto(`${process.env.STUDENT_URL}/spots/current`);
 
     const spotTile = page.getByTestId("spot-tile").first();
-    const anchorTag = await spotTile.locator("a").first();
-    const spotId = await anchorTag.getAttribute("href");
+// Using React Router's Link instead of a "div with an onClick + navigate" is ideal
+const linkToSpotPage = await spotTile.getByTestId("spot-link");
+const spotId = await linkToSpotPage.getAttribute("href"); // the href here can be added to your ele that has an onClick if you didn't use Link
     // await page.getByTestId("spot-link").first().click();
 
     await spotTile.click();

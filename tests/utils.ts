@@ -1,5 +1,3 @@
-import { log } from "console";
-
 export function createUniqueUser() {
   return {
     firstName: "Fakey",
@@ -552,7 +550,7 @@ export async function createSpotAndNoReviewUserOnPage(page){
   await page.getByTestId("user-menu-button").click();
   await page.getByText("Sign Up").click();
 
-  
+
   await page.getByTestId("first-name-input").click();
   await page.getByTestId("first-name-input").fill(`Fakey ${dummyData.username}`);
   await page.getByTestId("first-name-input").press("Tab");
