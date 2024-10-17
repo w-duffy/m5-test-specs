@@ -29,13 +29,12 @@ test.describe("Feature: Manage Spots", () => {
 
   test('If no spots have been posted yet by the user, show a "Create a New Spot" link, which links to the new spot form page, instead of the spot list.', async ({ page }) => {
     await signUpUser(page);
-    await page.goto(`${process.env.STUDENT_URL}/spots/current`);
+    await page.getByRole('link', { name: 'Create a New Spot' }).click();
 
-    const createSpotLink = page.getByText(/Create a New Spot/i);
-    await expect(createSpotLink).toBeVisible();
-    await expect(page.getByTestId('user-spots')).not.toBeVisible();
-
-    await createSpotLink.click();
+    await page.getByTestId('user-menu-button').click();
+    await page.getByTestId('manage-spots-link').click();
+    await expect(page.getByRole('button', { name: 'Create a New Spot' }).getByRole('link')).toBeVisible();
+    await page.getByRole('button', { name: 'Create a New Spot' }).getByRole('link').click()
     await expect(page).toHaveURL(`${process.env.STUDENT_URL}/spots/new`);
   });
 

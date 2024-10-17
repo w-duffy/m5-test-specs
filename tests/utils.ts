@@ -38,8 +38,7 @@ export async function signUpUser(page) {
 }
 
 
-export async function createSpot(page) {
-  const dummyData = createUniqueUser();
+export async function createSpot(page, dummyData = createUniqueUser()) {
 
   await page.getByRole("link", { name: "Create a New Spot" }).click();
   await page.getByPlaceholder("Country").click();
@@ -132,4 +131,16 @@ export async function clearSession(page) {
   await page.context().clearCookies();
   await page.context().clearPermissions();
   await page.evaluate(() => localStorage.clear());
+}
+
+export async function createReviewByDemo(page) {
+  
+  let reviewDetails = generateUniqueUsername()
+  await page.getByTestId("review-button").click();
+  await page
+    .getByPlaceholder("Leave your review here...")
+    .fill(`This is an awesome review comment for testing! ${reviewDetails}`);
+  await page.getByTestId("star-rating").locator("path").nth(4).click();
+
+  await page.getByRole("button", { name: "Submit Your Review" }).click();
 }
