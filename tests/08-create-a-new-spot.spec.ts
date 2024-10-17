@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { createUniqueUser } from "./utils";
 test.describe('Feature: Create a New Spot', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(process.env.STUDENT_URL!);
@@ -101,19 +102,20 @@ test.describe('Feature: Create a New Spot', () => {
     });
 
     test("When a spot is successfully created, the user should automatically be navigated to the new spot's detail page.", async ({ page }) => {
-        await page.getByLabel('Country').fill('Test Country');
-        await page.getByLabel('Street Address').fill('123 Test St');
+        const spotFiller = createUniqueUser();
+        await page.getByLabel('Country').fill(`Country of ${spotFiller.username}`);
+        await page.getByLabel('Street Address').fill(`${spotFiller.username} lane`);
         await page.getByLabel('City').fill('Test City');
         await page.getByLabel('State').fill('Test State');
-        await page.getByPlaceholder('Please write at least 30 characters').fill('This is a description of at least 30 characters long.');
-        await page.getByPlaceholder('Name of your spot').fill('Test Spot');
+        await page.getByPlaceholder('Please write at least 30 characters').fill(`Wow! ${spotFiller.username} great Spot -- !`);
+        await page.getByPlaceholder('Name of your spot').fill(`${spotFiller.username} Casa`);
         await page.getByPlaceholder('Price per night (USD)').fill('100');
         await page.getByPlaceholder('Preview Image URL').fill('https://static.vecteezy.com/system/resources/previews/024/189/092/non_2x/house-real-estate-building-in-png.png');
 
         await page.locator('button[type="submit"]').click();
 
-        await expect(page.getByTestId('spot-name')).toBeVisible();
-        await expect(page.getByTestId('spot-location')).toBeVisible();
+        await expect(page.getByText(`${spotFiller.username} Casa`)).toBeVisible();
+        await expect(page.getByText(`Country of ${spotFiller.username}`)).toBeVisible();
         const locationText = await page.getByTestId('spot-location').textContent();
         expect(locationText).toMatch(/[\w\s]+,\s[\w\s]+,\s[\w\s]+/);
     });

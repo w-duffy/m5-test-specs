@@ -7,7 +7,6 @@ test.describe('Application Header', () => {
 
   test('On every page of the site, the browser tab shows the app name and fav icon', async ({ page }) => {
     await expect(page).toHaveTitle(/.*/);
-
     await expect(page.getByTestId('favicon')).toBeAttached()
 
   });

@@ -30,7 +30,6 @@ The `.env` should point to either your local dev server, or your Render URL.
 > ⚠️ Before running the below command, please read the below section on adding test identifiers.
 - `npx playwright test --ui`
 
-
 ## Adding Test Identifiers ⭐
 
 Since everyone's project will be different, we can add attributes to elements so that Playwright can easily identify your interactive elements.
@@ -80,6 +79,9 @@ await page.getByTestId('login-button').click()
 
 
 ## Quickstart -- Working with UI Mode
+
+> 💡Enable Dark Mode 
+![dark mode](./screenshots/darkmode.png)
 
 Click the green arrow circled in the screenshot below to run all tests:
 
