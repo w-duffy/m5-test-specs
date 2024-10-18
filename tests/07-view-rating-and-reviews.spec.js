@@ -4,13 +4,11 @@ import {
   createSpot,
   logOutUser,
   createReview,
-  loginDemoUser,
   createUniqueUser,
   createSpotAndSingleReview,
   createSpotAndMultiReviews,
   encapsulateSpotCreation,
   createSpotAndNoReview,
-  createSpotAndNoReviewUserOnPage
 } from "./utils";
 import { SPOT_DETAIL_PAGE_TILE_LOCATOR, SPOT_DETAIL_PAGE_LOCATION_LOCATOR, SPOT_DETAIL_PAGE_RATING_LOCATOR, SPOT_DETAIL_PAGE_CITY_LOCATOR, SPOT_CALLOUT_BOX_LOCATOR, REVIEW_LIST_LOCATOR, REVIEW_ITEM_LOCATOR, REVIEW_DATE_LOCATOR, REVIEW_TEXT_LOCATOR, REVIEW_STAR_CLICKABLE_LOCATOR, REVIEW_BUTTON_LOCATOR, REVIEW_COUNT_LOCATOR, REVIEW_HEADING_LOCATOR } from './contants';
 const test = base.extend({
@@ -28,26 +26,26 @@ const test = base.extend({
 });
 test.describe("Feature: view-rating-and-reviews", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test("When viewing the home page, each spot tile in the tile list must show the average star rating for that spot immediately below the thumbnail of the tile and to the right of the spot's city & state. The average star rating should have a star icon followed by the average star rating of all the reviews for that spot as a decimal (e.g. 3.0 or 4.89, NOT 3 or 5)", async ({
     page,
   }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
     const spotTile = page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first();
     const ratingElement = spotTile.getByTestId(SPOT_DETAIL_PAGE_RATING_LOCATOR);
     await expect(ratingElement).toBeVisible();
     const ratingText = await ratingElement.textContent();
     expect(
-      ratingText?.match(/New/i) || !isNaN((parseFloat(ratingText!)))
+      ratingText?.match(/New/i) || !isNaN((parseFloat(ratingText)))
     ).toBeTruthy();
 
     const locationElement = spotTile.getByTestId(SPOT_DETAIL_PAGE_CITY_LOCATOR);
     const ratingBox = await ratingElement.boundingBox();
     const locationBox = await locationElement.boundingBox();
-    expect(ratingBox?.y).toBeGreaterThanOrEqual(locationBox?.y!);
-    expect(ratingBox?.x).toBeGreaterThanOrEqual(locationBox?.x!);
+    expect(ratingBox?.y).toBeGreaterThanOrEqual(locationBox?.y);
+    expect(ratingBox?.x).toBeGreaterThanOrEqual(locationBox?.x);
   });
 
   test("When viewing a spot's detail page, the review summary info should be in two different places, the callout information box and the heading before the list of reviews. The review summary info should show the average star rating of all the reviews for that spot and the review count for that spot", async ({
@@ -78,7 +76,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
     const reviewHeading = await page.getByTestId(REVIEW_HEADING_LOCATOR);
 
     // TODO: Add check for star icon
-    // Free points for now!
+    // Free points for now
 
     for (const element of [calloutBox, reviewHeading]) {
       const ratingText = await element.getByTestId(SPOT_DETAIL_PAGE_RATING_LOCATOR).textContent();
@@ -166,8 +164,8 @@ test.describe("Feature: view-rating-and-reviews", () => {
       const currReviewDate = await reviews[i]
         .getByTestId(REVIEW_DATE_LOCATOR)
         .textContent();
-      expect(new Date(prevReviewDate!).getTime()).toBeGreaterThan(
-        new Date(currReviewDate!).getTime()
+      expect(new Date(prevReviewDate).getTime()).toBeGreaterThan(
+        new Date(currReviewDate).getTime()
       );
     }
   });
@@ -201,14 +199,14 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await createSpotAndSingleReview(page);
     const spotInfo = await page.getByTestId(SPOT_DETAIL_PAGE_LOCATION_LOCATOR).boundingBox();
     const reviewsSection = await page.getByTestId(REVIEW_LIST_LOCATOR).boundingBox();
-    expect(reviewsSection?.y!).toBeGreaterThan(
-      spotInfo?.y! + spotInfo?.height!
+    expect(reviewsSection?.y).toBeGreaterThan(
+      spotInfo?.y + spotInfo?.height
     );
 
     const calloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).boundingBox();
     const viewportSize = page.viewportSize();
-    expect(calloutBox?.x! + calloutBox?.width!).toBeCloseTo(
-      viewportSize?.width!,
+    expect(calloutBox?.x + calloutBox?.width).toBeCloseTo(
+      viewportSize?.width,
       -3
     );
 
@@ -216,8 +214,8 @@ test.describe("Feature: view-rating-and-reviews", () => {
       .getByTestId(REVIEW_HEADING_LOCATOR)
       .boundingBox();
     const reviewsList = await page.getByTestId(REVIEW_LIST_LOCATOR).boundingBox();
-    expect(reviewsList?.y!).toBeGreaterThan(
-      reviewHeading?.y! + reviewHeading?.height!
+    expect(reviewsList?.y).toBeGreaterThan(
+      reviewHeading?.y + reviewHeading?.height
     );
   });
 });

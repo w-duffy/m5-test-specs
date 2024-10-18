@@ -3,7 +3,7 @@ import { updateReviewCountCheck, createSpotAndSingleReview, encapsulateSpotCreat
 import { CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR, CREATE_A_REVIEW_MODAL_LOCATOR, CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR, REVIEW_HEADING_LOCATOR, SPOT_LINK_TO_SPOT_PAGE_LOCATOR, SPOT_TILE_LOCATOR, REVIEW_LIST_LOCATOR } from './contants';
 test.describe("Feature: Post a Review", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test('If the current user is logged-in and they are viewing a spot\'s detail page for a spot that they HAVE NOT posted a review yet, a "Post Your Review" button shows between the rating/reviews heading and the list of reviews.', async ({
@@ -21,9 +21,9 @@ test.describe("Feature: Post a Review", () => {
     const listBox = await reviewsList.boundingBox();
 
     expect(buttonBox?.y).toBeGreaterThanOrEqual(
-      headingBox?.y! + headingBox?.height!
+      headingBox?.y + headingBox?.height
     );
-    expect(buttonBox?.y! + buttonBox?.height!).toBeLessThanOrEqual(listBox?.y!);
+    expect(buttonBox?.y + buttonBox?.height).toBeLessThanOrEqual(listBox?.y);
   });
 
   test('If the current user is logged-in and they are viewing a spot\'s detail page for a spot that they are an owner of, the "Post Your Review" button should be hidden.', async ({
@@ -47,7 +47,7 @@ test.describe("Feature: Post a Review", () => {
   test('If the current user is NOT logged-in and they are viewing a spot\'s detail page for a spot, the "Post Your Review" button should be hidden.', async ({
     page,
   }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
     await page.getByTestId(SPOT_LINK_TO_SPOT_PAGE_LOCATOR).first().click();
     await expect(page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR)).not.toBeVisible();
   });
@@ -194,8 +194,8 @@ test.describe("Feature: Post a Review", () => {
       .getByRole("button", { name: "Submit Your Review" })
       .boundingBox();
 
-    expect(title?.y).toBeLessThan(textarea?.y!);
-    expect(textarea?.y).toBeLessThan(starRating?.y!);
-    expect(starRating?.y).toBeLessThan(submitButton?.y!);
+    expect(title?.y).toBeLessThan(textarea?.y);
+    expect(textarea?.y).toBeLessThan(starRating?.y);
+    expect(starRating?.y).toBeLessThan(submitButton?.y);
   });
 });

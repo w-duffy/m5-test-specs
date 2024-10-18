@@ -3,7 +3,7 @@ import { createSpotAndSingleReview, createSpotAndSingleReviewLogInDemoUser } fro
 import { REVIEW_TEXT_LOCATOR, REVIEW_LIST_LOCATOR, DELETE_A_REVIEW_MODAL_LOCATOR } from './contants';
 test.describe("Feature: Delete a Review", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test('On a review that the logged-in user has posted, there should be a "Delete" button below the review\'s comment.', async ({ page }) => {
@@ -60,7 +60,7 @@ await createSpotAndSingleReview(page);
     await modal.getByRole('button', { name: 'Yes (Delete Review)' }).click();
 
     await page.waitForTimeout(2000);
-    await expect (page.getByText(initialReviewContent!)).not.toBeVisible();
+    await expect (page.getByText(initialReviewContent)).not.toBeVisible();
 
   });
 
@@ -77,7 +77,7 @@ await createSpotAndSingleReview(page);
 
     await page.waitForTimeout(1000);
 
-    await expect(page.getByText(reviewText!)).not.toBeVisible();
+    await expect(page.getByText(reviewText)).not.toBeVisible();
   });
 
   test('The layout and element positioning is equivalent to the wireframes', async ({ page }) => {
@@ -89,7 +89,7 @@ await createSpotAndSingleReview(page);
     const reviewText = await reviewItem.getByTestId(REVIEW_TEXT_LOCATOR).boundingBox();
     const deleteButton = await reviewItem.getByRole('button', { name: 'Delete' }).boundingBox();
 
-    expect(reviewText?.y).toBeLessThan(deleteButton?.y!);
+    expect(reviewText?.y).toBeLessThan(deleteButton?.y);
 
     await reviewItem.getByRole('button', { name: 'Delete' }).click();
 
@@ -99,9 +99,9 @@ await createSpotAndSingleReview(page);
     const confirmButton = await modal.getByRole('button', { name: 'Yes (Delete Review)' }).boundingBox();
     const cancelButton = await modal.getByRole('button', { name: 'No (Keep Review)' }).boundingBox();
 
-    expect(title?.y).toBeLessThan(message?.y!);
-    expect(message?.y).toBeLessThan(confirmButton?.y!);
-    expect(confirmButton?.y).toBeLessThanOrEqual(cancelButton?.y!);
-    expect(cancelButton?.x).toBeCloseTo(confirmButton?.x!);
+    expect(title?.y).toBeLessThan(message?.y);
+    expect(message?.y).toBeLessThan(confirmButton?.y);
+    expect(confirmButton?.y).toBeLessThanOrEqual(cancelButton?.y);
+    expect(cancelButton?.x).toBeCloseTo(confirmButton?.x);
   });
 });

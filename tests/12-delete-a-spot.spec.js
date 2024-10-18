@@ -3,7 +3,7 @@ import { createSpot, signUpUser } from "./utils";
 import { SPOT_DETAIL_PAGE_TILE_LOCATOR, SPOT_LINK_TO_SPOT_PAGE_LOCATOR, DELETE_A_SPOT_MODAL_LOCATOR, SPOT_TILE_LOCATOR, DELETE_A_SPOT_CANCEL_BUTTON_LOCATOR, DELETE_A_SPOT_CONFIRM_BUTTON_LOCATOR } from './contants';
 test.describe("Feature: Delete a Spot", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test('Clicking "Delete" on one of the spot tiles on the spot management page opens a confirmation modal popup that should contain: a Title: "Confirm Delete", a Message: "Are you sure you want to remove this spot?", a Red button: "Yes (Delete Spot)", and a Dark grey button: "No (Keep Spot)".', async ({ page }) => {
@@ -87,10 +87,10 @@ test.describe("Feature: Delete a Spot", () => {
     const deleteButton = await modal.getByRole('button', { name: 'Yes (Delete Spot)' }).boundingBox();
     const cancelButton = await modal.getByRole('button', { name: 'No (Keep Spot)' }).boundingBox();
 
-    expect(title?.y).toBeLessThan(message?.y!);
-    expect(message?.y).toBeLessThan(deleteButton?.y!);
-    expect(deleteButton?.y).toBeLessThan(cancelButton?.y!);
+    expect(title?.y).toBeLessThan(message?.y);
+    expect(message?.y).toBeLessThan(deleteButton?.y);
+    expect(deleteButton?.y).toBeLessThan(cancelButton?.y);
 
-    expect(cancelButton?.x).toBe(deleteButton?.x!);
+    expect(cancelButton?.x).toBe(deleteButton?.x);
   });
 });

@@ -3,20 +3,20 @@ import { createUniqueUser, loginDemoUser } from "./utils";
 import {CREATE_A_NEW_SPOT_FORM_LOCATOR, CREATE_A_NEW_SPOT_FORM_TITLE_LOCATOR, CREATE_A_NEW_SPOT_SECTION_1_LOCATOR, CREATE_A_NEW_SPOT_SECTION_1_CAPTION_LOCATOR, CREATE_A_NEW_SPOT_SECTION_1_HEADING_LOCATOR, CREATE_A_NEW_SPOT_SECTION_2_LOCATOR, CREATE_A_NEW_SPOT_SECTION_2_CAPTION_LOCATOR, CREATE_A_NEW_SPOT_SECTION_2_HEADING_LOCATOR, CREATE_A_NEW_SPOT_SECTION_3_LOCATOR, CREATE_A_NEW_SPOT_SECTION_3_CAPTION_LOCATOR, CREATE_A_NEW_SPOT_SECTION_3_HEADING_LOCATOR, CREATE_A_NEW_SPOT_SECTION_4_LOCATOR, CREATE_A_NEW_SPOT_SECTION_4_CAPTION_LOCATOR, CREATE_A_NEW_SPOT_SECTION_4_HEADING_LOCATOR, CREATE_A_NEW_SPOT_SECTION_5_LOCATOR, CREATE_A_NEW_SPOT_SECTION_5_CAPTION_LOCATOR, CREATE_A_NEW_SPOT_SECTION_5_HEADING_LOCATOR, CREATE_A_NEW_SPOT_LOCATION_INPUT_LOCATOR, PROFILE_BUTTON_LOCATOR } from './contants';
 test.describe('Feature: Create a New Spot', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL!);
+        await page.goto(process.env.STUDENT_URL);
         await loginDemoUser(page)
         await page.getByText('Create a New Spot').click();
     });
 
     test("There should be a 'Create a New Spot' button in the navigation bar to the left of the User Menu button for logged-in users", async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL!);
+        await page.goto(process.env.STUDENT_URL);
         const createSpotButton = page.getByText('Create a New Spot');
         await expect(createSpotButton).toBeVisible();
 
         const userMenuButton = page.getByTestId(PROFILE_BUTTON_LOCATOR);
         const createSpotBox = await createSpotButton.boundingBox();
         const userMenuBox = await userMenuButton.boundingBox();
-        expect(createSpotBox?.x).toBeLessThan(userMenuBox?.x!);
+        expect(createSpotBox?.x).toBeLessThan(userMenuBox?.x);
     });
     //
 
@@ -103,7 +103,7 @@ test.describe('Feature: Create a New Spot', () => {
         await page.getByLabel('Street Address').fill(`${spotFiller.username} lane`);
         await page.getByLabel('City').fill('Test City');
         await page.getByLabel('State').fill('Test State');
-        await page.getByPlaceholder('Please write at least 30 characters').fill(`Wow! ${spotFiller.username} great Spot -- !`);
+        await page.getByPlaceholder('Please write at least 30 characters').fill(`Wow ${spotFiller.username} great Spot -- `);
         await page.getByPlaceholder('Name of your spot').fill(`${spotFiller.username} Casa`);
         await page.getByPlaceholder('Price per night (USD)').fill('100');
         await page.getByPlaceholder('Preview Image URL').fill('https://static.vecteezy.com/system/resources/previews/024/189/092/non_2x/house-real-estate-building-in-png.png');
@@ -120,7 +120,7 @@ test.describe('Feature: Create a New Spot', () => {
 
         await page.getByLabel('Country').fill('Test Country');
 
-        await page.goto(process.env.STUDENT_URL!);
+        await page.goto(process.env.STUDENT_URL);
 
         await page.getByText('Create a New Spot').click();
 
@@ -137,12 +137,12 @@ test.describe('Feature: Create a New Spot', () => {
         const section5 = await page.getByTestId(CREATE_A_NEW_SPOT_SECTION_5_LOCATOR).boundingBox();
         const submitButton = await page.locator('button[type="submit"]').boundingBox();
 
-        expect(formTitle?.y).toBeLessThan(section1?.y!);
-        expect(section1?.y).toBeLessThan(section2?.y!);
-        expect(section2?.y).toBeLessThan(section3?.y!);
-        expect(section3?.y).toBeLessThan(section4?.y!);
-        expect(section4?.y).toBeLessThan(section5?.y!);
-        expect(section5?.y).toBeLessThan(submitButton?.y!);
+        expect(formTitle?.y).toBeLessThan(section1?.y);
+        expect(section1?.y).toBeLessThan(section2?.y);
+        expect(section2?.y).toBeLessThan(section3?.y);
+        expect(section3?.y).toBeLessThan(section4?.y);
+        expect(section4?.y).toBeLessThan(section5?.y);
+        expect(section5?.y).toBeLessThan(submitButton?.y);
     });
 
 

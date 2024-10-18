@@ -124,7 +124,7 @@ export async function createSpotAndSingleReview(page){
 
 export async function signUpUser(page) {
   const user = createUniqueUser();
-  await page.goto(process.env.STUDENT_URL!);
+  await page.goto(process.env.STUDENT_URL);
   await page.getByTestId("user-menu-button").click();
   await page.getByText("Sign Up").click();
   await page.getByTestId("first-name-input").click();
@@ -770,5 +770,3 @@ export async function createSpotAndSingleReviewLogInDemoUser(page){
   await page.goto(url);
   await page.waitForTimeout(2000);
 }
-
-

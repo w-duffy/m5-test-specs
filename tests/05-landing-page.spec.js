@@ -3,7 +3,7 @@ import { SPOT_LIST_LOCATOR, SPOT_TOOLTIP_LOCATOR, SPOT_TILE_LOCATOR,  SPOT_THUMB
 
 test.describe("Feature: Landing Page - List of All Spots", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test("On the landing page of the site, I should see a tile list of all the spots.", async ({
@@ -38,7 +38,7 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
     const spots = await page.getByTestId(SPOT_TILE_LOCATOR).all();
     for (const spot of spots) {
       const rating = await spot.getByTestId(SPOT_RATING_LOCATOR).textContent();
-      expect(rating?.match(/New/i) || !isNaN(parseFloat(rating!))).toBeTruthy();
+      expect(rating?.match(/New/i) || !isNaN(parseFloat(rating))).toBeTruthy();
     }
   });
 
@@ -74,19 +74,19 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
     const spotsListBox = await spotsList.boundingBox();
 
     const viewportSize = page.viewportSize();
-    expect(spotsListBox?.x).toBeGreaterThan(0);
-    expect(spotsListBox?.x! + spotsListBox?.width!).toBeLessThan(
-      viewportSize?.width!
+    expect(spotsListBox.x).toBeGreaterThan(0);
+    expect(spotsListBox.x + spotsListBox.width).toBeLessThan(
+      viewportSize.width
     );
 
     const spots = await page.getByTestId(SPOT_TILE_LOCATOR).all();
     const firstSpotBox = await spots[0].boundingBox();
     const secondSpotBox = await spots[1].boundingBox();
 
-    expect(Math.abs(firstSpotBox?.y! - secondSpotBox?.y!)).toBeLessThan(5);
+    expect(Math.abs(firstSpotBox?.y - secondSpotBox?.y)).toBeLessThan(5);
 
     const horizontalSpacing =
-      secondSpotBox?.x! - (firstSpotBox?.x! + firstSpotBox?.width!);
+      secondSpotBox?.x - (firstSpotBox?.x + firstSpotBox?.width);
     expect(horizontalSpacing).toBeGreaterThan(0);
 
     const firstSpot = spots[0];
@@ -100,13 +100,13 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
 
     const price = await firstSpot.getByTestId(SPOT_PRICE_LOCATOR).boundingBox();
 
-    expect(thumbnail?.y).toBeLessThan(city?.y!);
+    expect(thumbnail?.y).toBeLessThan(city.y);
 
     // TODO: Checking city and state ... issue when city and state share the same container
     // expect(Math.abs(city.y - state.y)).toBeLessThan(5);
 
-    expect(rating?.y).toBeGreaterThanOrEqual(city?.y!);
+    expect(rating?.y).toBeGreaterThanOrEqual(city.y);
 
-    expect(price?.y).toBeGreaterThan(rating?.y!);
+    expect(price?.y).toBeGreaterThan(rating?.y);
   });
 });

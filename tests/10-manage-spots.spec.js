@@ -3,7 +3,7 @@ import { createSpot, signUpUser } from "./utils";
 import { PROFILE_BUTTON_LOCATOR, MANAGE_SPOTS_PPROFILE_DROPDOWN_LINK_LOCATOR, MANAGE_SPOTS_PAGE_LIST_OF_SPOTS_LOCATOR, SPOT_DETAIL_PAGE_TILE_LOCATOR, SPOT_LINK_TO_SPOT_PAGE_LOCATOR, SPOT_THUMBNAIL_IMAGE_LOCATOR, SPOT_CITY_LOCATOR, SPOT_RATING_LOCATOR, SPOT_PRICE_LOCATOR } from './contants';
 test.describe("Feature: Manage Spots", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test('When opening the user drop down menu and selecting "Manage Spots", it should navigate the user to the spot management page which shows the the list of all the spots created by the user.', async ({ page }) => {
@@ -14,7 +14,7 @@ test.describe("Feature: Manage Spots", () => {
     await page.getByTestId(MANAGE_SPOTS_PPROFILE_DROPDOWN_LINK_LOCATOR).click()
     await page.mouse.click(0, 0);
 
-    await expect(page).toHaveURL(`${process.env.STUDENT_URL!}/spots/current`);
+    await expect(page).toHaveURL(`${process.env.STUDENT_URL}/spots/current`);
     await expect(page.getByTestId(MANAGE_SPOTS_PAGE_LIST_OF_SPOTS_LOCATOR)).toBeVisible();
   });
 
@@ -65,7 +65,7 @@ test.describe("Feature: Manage Spots", () => {
     const locationBox = await spotTile.getByTestId(SPOT_CITY_LOCATOR).boundingBox();
     const updateBox = await updateButton.boundingBox();
 
-    expect(updateBox?.y).toBeGreaterThan(locationBox?.y! + locationBox?.height!);
+    expect(updateBox?.y).toBeGreaterThan(locationBox?.y + locationBox?.height);
   });
 
   test('Clicking any part of the spot tile should navigate to that spot\'s detail page.', async ({ page }) => {
@@ -93,7 +93,7 @@ const spotId = await linkToSpotPage.getAttribute("href"); // the href here can b
     const spotList = await page.getByTestId(MANAGE_SPOTS_PAGE_LIST_OF_SPOTS_LOCATOR).boundingBox();
     const firstSpotTile = await page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first().boundingBox();
 
-    expect(heading?.y).toBeLessThan(spotList?.y!);
-    expect(spotList?.y).toBeLessThan(firstSpotTile?.y!);
+    expect(heading?.y).toBeLessThan(spotList?.y);
+    expect(spotList?.y).toBeLessThan(firstSpotTile?.y);
   });
 });

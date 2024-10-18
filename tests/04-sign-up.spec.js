@@ -19,7 +19,7 @@ function createUniqueUser() {
   }
 test.describe('Feature: Sign Up', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL!);
+        await page.goto(process.env.STUDENT_URL);
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
     });
 
@@ -55,7 +55,7 @@ test.describe('Feature: Sign Up', () => {
         const lastInputBoxBound = await lastInputBox.boundingBox();
         const signUpButtonBound = await signUpButton.boundingBox();
 
-        expect(signUpButtonBound?.y).toBeGreaterThan(lastInputBoxBound?.y! + lastInputBoxBound?.height!);
+        expect(signUpButtonBound?.y).toBeGreaterThan(lastInputBoxBound.y + lastInputBoxBound.height);
     });
 
     test('The "Sign up" button should be disabled when any field is empty.', async ({ page }) => {
@@ -211,8 +211,8 @@ test.describe('Feature: Sign Up', () => {
         const modalBox = await modal.boundingBox();
 
         const viewportSize = page.viewportSize();
-        expect(modalBox?.x).toBeCloseTo((viewportSize?.width! - modalBox?.width!) / 2, -2);
-        expect(modalBox?.y).toBeCloseTo((viewportSize?.height! - modalBox?.height!) / 2, -2);
+        expect(modalBox?.x).toBeCloseTo((viewportSize.width - modalBox.width) / 2, -2);
+        expect(modalBox?.y).toBeCloseTo((viewportSize.height - modalBox.height) / 2, -2);
 
         const formElements = [SIGN_UP_FIRST_NAME_INPUT_LOCATOR, SIGN_UP_LAST_NAME_INPUT_LOCATOR , SIGN_UP_EMAIL_INPUT_LOCATOR, SIGN_UP_USERNAME_INPUT_LOCATOR, SIGN_UP_PASSWORD_INPUT_LOCATOR, SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR, SIGN_UP_FORM_BUTTON_LOCATOR];
         for (let i = 1; i < formElements.length; i++) {
@@ -220,7 +220,7 @@ test.describe('Feature: Sign Up', () => {
             const currentElement = page.getByTestId(formElements[i]);
             const prevBox = await prevElement.boundingBox();
             const currentBox = await currentElement.boundingBox();
-            expect(currentBox?.y).toBeGreaterThan(prevBox?.y!);
+            expect(currentBox?.y).toBeGreaterThan(prevBox.y);
         }
     });
 });
