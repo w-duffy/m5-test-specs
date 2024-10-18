@@ -112,7 +112,12 @@ export async function createSpotAndSingleReview(page){
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-  await page.getByTestId("star-rating").locator("path").nth(4).click();
+
+ 
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
+
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 }
 
@@ -207,7 +212,11 @@ export async function createReview(page) {
   await page
     .getByPlaceholder("Leave your review here...")
     .fill(`This is an awesome review comment for testing! ${reviewDetails}`);
-  await page.getByTestId("star-rating").locator("path").nth(4).click();
+ 
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
+
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 }
@@ -241,7 +250,11 @@ export async function createReviewByDemo(page) {
   await page
     .getByPlaceholder("Leave your review here...")
     .fill(`This is an awesome review comment for testing! ${reviewDetails}`);
-  await page.getByTestId("star-rating").locator("path").nth(4).click();
+ 
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
+
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 }
@@ -367,7 +380,10 @@ export async function createSpotAndMultiReviews(page){
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-  await page.getByTestId("star-rating").locator("path").nth(4).click();
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
+
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 
   await encapsulateUserCreation(page)
@@ -379,7 +395,10 @@ export async function createSpotAndMultiReviews(page){
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-  await page.getByTestId("star-rating").locator("path").nth(4).click();
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
+
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 }
 
@@ -599,7 +618,11 @@ export async function updateReviewCountCheck(page, expect){
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-  await page.getByTestId("star-rating").locator("path").nth(4).click();
+ 
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
+
   await page.getByRole("button", { name: "Submit Your Review" }).click();
   await page.waitForTimeout(2000);
   const initialRating = await page
@@ -620,7 +643,11 @@ const initialReviewCount = await page
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-  await page.getByTestId("star-rating").locator("path").nth(4).click();
+ 
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
+
   await page.getByRole("button", { name: "Submit Your Review" }).click();
   await page.waitForTimeout(2000);
 
@@ -735,7 +762,11 @@ export async function createSpotAndSingleReviewLogInDemoUser(page){
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-  await page.getByTestId("star-rating").locator("path").nth(4).click();
+
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
+
   await page.getByRole("button", { name: "Submit Your Review" }).click();
   await logOutUser(page);
   await loginDemoUser(page);

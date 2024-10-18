@@ -94,8 +94,8 @@ test.describe("Feature: Post a Review", () => {
     await signUpUser(page);
     await page.getByTestId("spot-tile").first().click();
     await page.getByTestId("review-button").click();
-    const starRating = page.getByTestId("star-rating");
-    await expect(starRating).toBeVisible();
+    const starRating = await page.getByTestId("review-star-clickable").all()
+    await expect(starRating).toHaveLength(5);
     const starsLabel = page.getByText("Stars");
     await expect(starsLabel).toBeVisible();
   });
@@ -123,8 +123,11 @@ test.describe("Feature: Post a Review", () => {
     await page.getByPlaceholder("Leave your review here...").fill("Yeet");
     await expect(submitButton).toBeDisabled();
 
+    // await page.getByTestId("star-rating").all().click();
     await page.getByPlaceholder("Leave your review here...").fill("");
-    await page.getByTestId("star-rating").locator("path").nth(4).click();
+    for (let star of await page.getByTestId("review-star-clickable").all()) {
+      await star.click();
+    }
     await expect(submitButton).toBeDisabled();
   });
 
@@ -144,7 +147,9 @@ test.describe("Feature: Post a Review", () => {
     await page
       .getByPlaceholder("Leave your review here...")
       .fill("This is an awesome review comment for testing!");
-    await page.getByTestId("star-rating").locator("path").nth(4).click();
+      for (let star of await page.getByTestId("review-star-clickable").all()) {
+        await star.click();
+      }
 
     await page.getByRole("button", { name: "Submit Your Review" }).click();
 
@@ -214,15 +219,14 @@ test.describe("Feature: Post a Review", () => {
   test("The layout and element positioning is equivalent to the wireframes.", async ({
     page,
   }) => {
-    await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
+    await createSpotAndNoReviewUserOnPage(page)
     await page.getByTestId("review-button").click();
 
     const title = await page.getByText("How was your stay?").boundingBox();
     const textarea = await page
       .getByPlaceholder("Leave your review here...")
       .boundingBox();
-    const starRating = await page.getByTestId("star-rating").boundingBox();
+    const starRating = await page.getByTestId("review-star-clickable").first().boundingBox();
     const submitButton = await page
       .getByRole("button", { name: "Submit Your Review" })
       .boundingBox();
