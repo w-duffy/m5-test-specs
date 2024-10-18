@@ -176,7 +176,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await page.getByTestId(REVIEW_LIST_LOCATOR).first();
 
     await expect(
-      page.getByTestId(REVIEW_LIST_LOCATOR).first().getByText("Fakey")
+      page.getByTestId(REVIEW_LIST_LOCATOR).first().getByText(/Fakey/)
     ).toBeVisible();
     await expect(
       page.getByTestId(REVIEW_LIST_LOCATOR).first().getByText("October")
