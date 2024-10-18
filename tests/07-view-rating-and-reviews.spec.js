@@ -10,7 +10,7 @@ import {
   encapsulateSpotCreation,
   createSpotAndNoReview,
 } from "./utils";
-import { SPOT_DETAIL_PAGE_TILE_LOCATOR, SPOT_DETAIL_PAGE_LOCATION_LOCATOR, SPOT_DETAIL_PAGE_RATING_LOCATOR, SPOT_DETAIL_PAGE_CITY_LOCATOR, SPOT_CALLOUT_BOX_LOCATOR, REVIEW_LIST_LOCATOR, REVIEW_ITEM_LOCATOR, REVIEW_DATE_LOCATOR, REVIEW_TEXT_LOCATOR, REVIEW_STAR_CLICKABLE_LOCATOR, REVIEW_BUTTON_LOCATOR, REVIEW_COUNT_LOCATOR, REVIEW_HEADING_LOCATOR } from './contants';
+import { SPOT_DETAIL_PAGE_TILE_LOCATOR, SPOT_DETAIL_PAGE_LOCATION_LOCATOR, SPOT_DETAIL_PAGE_RATING_LOCATOR, SPOT_DETAIL_PAGE_CITY_LOCATOR, SPOT_CALLOUT_BOX_LOCATOR, REVIEW_LIST_LOCATOR, REVIEW_ITEM_LOCATOR, REVIEW_DATE_LOCATOR, REVIEW_COUNT_LOCATOR, REVIEW_HEADING_LOCATOR } from './contants';
 const test = base.extend({
   context: async ({}, use) => {
     const browser = await chromium.launch();
@@ -127,7 +127,6 @@ test.describe("Feature: view-rating-and-reviews", () => {
     page,
   }) => {
     await createSpotAndSingleReview(page);
-    page.waitForTimeout(2000);
     await expect(page.getByTestId(REVIEW_HEADING_LOCATOR)).toContainText(
       /\d\.\d+\s*\d+\sReview/
     );
@@ -142,7 +141,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
   }) => {
     const dummyData = createUniqueUser();
     await encapsulateSpotCreation(page, dummyData);
-    page.waitForTimeout(2000);
+    // page.waitForTimeout(2000);
     await expect(
       page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).getByRole("paragraph")
     ).not.toContainText("Review");

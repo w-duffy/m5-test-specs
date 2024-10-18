@@ -366,12 +366,12 @@ export async function createSpotAndMultiReviews(page){
 
   const dummyData2 = createUniqueUser();
   await encapsulateSpotCreation(page, dummyData2)
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(1500);
   let url = page.url();
   await encapsulateUserCreation(page)
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(1000);
   await page.goto(url);
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(1000);
   await page.getByTestId("review-button").click();
   await page.getByPlaceholder("Leave your review here...").click();
   await page
@@ -384,9 +384,9 @@ export async function createSpotAndMultiReviews(page){
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 
   await encapsulateUserCreation(page)
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(1000);
   await page.goto(url);
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(1000);
   await page.getByTestId("review-button").click();
   await page.getByPlaceholder("Leave your review here...").click();
   await page
