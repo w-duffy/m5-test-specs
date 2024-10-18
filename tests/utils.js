@@ -1,3 +1,5 @@
+// adds consts
+import { SIGN_UP_EMAIL_INPUT_LOCATOR, SPOT_TILE_LOCATOR, CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR, SIGN_UP_PASSWORD_INPUT_LOCATOR, SIGN_UP_FORM_BUTTON_LOCATOR, SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR, SIGN_UP_USERNAME_INPUT_LOCATOR, SIGN_UP_LAST_NAME_INPUT_LOCATOR, PROFILE_BUTTON_LOCATOR, DEMO_USER_LOGIN_BUTTON_LOCATOR, CREATE_NEW_SPOT_BUTTON_LOCATOR, SIGN_UP_FIRST_NAME_INPUT_LOCATOR, LOGIN_CREDENTIAL_INPUT_LOCATOR, LOGIN_PASSWORD_INPUT_LOCATOR, LOGIN_FORM_BUTTON_LOCATOR, CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR } from './contants';
 export function createUniqueUser() {
   return {
     firstName: "Fakey",
@@ -18,11 +20,11 @@ export function generateUniqueUsername() {
 
 export async function createSpotAndSingleReview(page){
   const dummyData = createUniqueUser();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
-  await page.getByTestId("demo-user-login").click();
+  await page.getByTestId(DEMO_USER_LOGIN_BUTTON_LOCATOR).click();
   await page.waitForTimeout(1000);
-  await page.getByTestId("create-new-spot-button").click()
+  await page.getByTestId(CREATE_NEW_SPOT_BUTTON_LOCATOR).click()
   await page.getByPlaceholder("Country").click();
   await page.getByPlaceholder("Country").fill(`${dummyData.username} United`);
   await page.getByPlaceholder("Street Address").click();
@@ -83,70 +85,71 @@ export async function createSpotAndSingleReview(page){
   await page.getByRole("button", { name: "Create Spot" }).click();
   await page.waitForTimeout(2000);
   let url = page.url();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByRole("button", { name: "Log Out" }).click();
   await page.waitForTimeout(2000);
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Sign Up").click();
 
-  await page.getByTestId("first-name-input").click();
-  await page.getByTestId("first-name-input").fill(`Fakey${dummyData.username}`);
-  await page.getByTestId("first-name-input").press("Tab");
-  await page.getByTestId("last-name-input").fill(`W${dummyData.username}`);
-  await page.getByTestId("last-name-input").press("Tab");
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).click();
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).fill(`Fakey${dummyData.username}`);
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).fill(`W${dummyData.username}`);
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).press("Tab");
   await page
-    .getByTestId("email-input")
+    .getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR)
     .fill(`${dummyData.username}@test.com`);
-  await page.getByTestId("email-input").press("Tab");
-  await page.getByTestId("username-input").fill(dummyData.username);
-  await page.getByTestId("username-input").press("Tab");
-  await page.getByTestId("password-input").fill("password");
-  await page.getByTestId("password-input").press("Tab");
-  await page.getByTestId("confirm-password-input").fill("password");
-  await page.getByTestId("form-sign-up-button").click();
+  await page.getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_FORM_BUTTON_LOCATOR).click();
   await page.waitForTimeout(2000);
   await page.goto(url);
   await page.waitForTimeout(2000);
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Leave your review here...").click();
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
 
 
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
+  page.waitForTimeout(1000);
 }
 
 
 export async function signUpUser(page) {
   const user = createUniqueUser();
   await page.goto(process.env.STUDENT_URL);
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Sign Up").click();
-  await page.getByTestId("first-name-input").click();
-  await page.getByTestId("first-name-input").fill(`Fakey${user.username}`);
-  await page.getByTestId("first-name-input").press("Tab");
-  await page.getByTestId("last-name-input").fill(`W${user.lastName}`);
-  await page.getByTestId("last-name-input").press("Tab");
-  await page.getByTestId("email-input").fill(user.email);
-  await page.getByTestId("email-input").press("Tab");
-  await page.getByTestId("username-input").fill(user.username);
-  await page.getByTestId("username-input").press("Tab");
-  await page.getByTestId("password-input").fill("password");
-  await page.getByTestId("password-input").press("Tab");
-  await page.getByTestId("confirm-password-input").fill("password");
-  await page.getByTestId("form-sign-up-button").click();
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).click();
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).fill(`Fakey${user.username}`);
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).fill(`W${user.lastName}`);
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR).fill(user.email);
+  await page.getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).fill(user.username);
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_FORM_BUTTON_LOCATOR).click();
 }
 
 
 export async function createSpot(page, dummyData = createUniqueUser()) {
-  await page.getByTestId("create-new-spot-button").click()
+  await page.getByTestId(CREATE_NEW_SPOT_BUTTON_LOCATOR).click()
   // await page.getByRole("link", { name: "Create a New Spot" }).click();
-  await page.getByTestId("create-new-spot-button").click();
+  await page.getByTestId(CREATE_NEW_SPOT_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Country").click();
   await page.getByPlaceholder("Country").fill("Middle Earth");
   await page.getByPlaceholder("Street Address").click();
@@ -207,30 +210,30 @@ export async function createSpot(page, dummyData = createUniqueUser()) {
 export async function createReview(page) {
   let reviewDetails = generateUniqueUsername()
   await signUpUser(page);
-  await page.getByTestId("spot-tile").first().click();
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
   await page
     .getByPlaceholder("Leave your review here...")
     .fill(`This is an awesome review comment for testing! ${reviewDetails}`);
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 }
 
 export async function logOutUser(page) {
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByRole("button", { name: "Log Out" }).click();
 }
 
 
 export async function loginDemoUser(page) {
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
 
   await page.getByText("Log in").click();
-  await page.getByTestId("credential-input").fill("demo@user.io");
-  await page.getByTestId("password-input").fill("password");
-  await page.getByTestId("login-button").click();
+  await page.getByTestId(LOGIN_CREDENTIAL_INPUT_LOCATOR).fill("demo@user.io");
+  await page.getByTestId(LOGIN_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(LOGIN_FORM_BUTTON_LOCATOR).click();
 }
 
 
@@ -243,12 +246,12 @@ export async function clearSession(page) {
 export async function createReviewByDemo(page) {
 
   let reviewDetails = generateUniqueUsername()
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
   await page
     .getByPlaceholder("Leave your review here...")
     .fill(`This is an awesome review comment for testing! ${reviewDetails}`);
 
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
 
@@ -271,11 +274,11 @@ export async function createReviewByDemo(page) {
 
 
 export async function encapsulateSpotCreation(page, dummyData = createUniqueUser()){
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
-  await page.getByTestId("demo-user-login").click();
+  await page.getByTestId(DEMO_USER_LOGIN_BUTTON_LOCATOR).click();
   await page.waitForTimeout(2000);
-  await page.getByTestId("create-new-spot-button").click();
+  await page.getByTestId(CREATE_NEW_SPOT_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Country").click();
   await page.getByPlaceholder("Country").fill(`${dummyData.username} United`);
   await page.getByPlaceholder("Street Address").click();
@@ -340,44 +343,44 @@ export async function encapsulateSpotCreation(page, dummyData = createUniqueUser
 
 export async function encapsulateUserCreation(page){
   const dummyData = createUniqueUser();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByRole("button", { name: "Log Out" }).click();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Sign Up").click();
 
-  await page.getByTestId("first-name-input").click();
-  await page.getByTestId("first-name-input").fill(dummyData.username);
-  await page.getByTestId("first-name-input").press("Tab");
-  await page.getByTestId("last-name-input").fill(dummyData.username);
-  await page.getByTestId("last-name-input").press("Tab");
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).click();
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).press("Tab");
   await page
-    .getByTestId("email-input")
+    .getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR)
     .fill(`${dummyData.username}@test.com`);
-  await page.getByTestId("email-input").press("Tab");
-  await page.getByTestId("username-input").fill(dummyData.username);
-  await page.getByTestId("username-input").press("Tab");
-  await page.getByTestId("password-input").fill("password");
-  await page.getByTestId("password-input").press("Tab");
-  await page.getByTestId("confirm-password-input").fill("password");
-  await page.getByTestId("form-sign-up-button").click()
+  await page.getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_FORM_BUTTON_LOCATOR).click()
 }
 
 export async function createSpotAndMultiReviews(page){
 
   const dummyData2 = createUniqueUser();
   await encapsulateSpotCreation(page, dummyData2)
-  await page.waitForTimeout(1500);
+  await page.waitForTimeout(1000);
   let url = page.url();
   await encapsulateUserCreation(page)
   await page.waitForTimeout(1000);
   await page.goto(url);
   await page.waitForTimeout(1000);
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Leave your review here...").click();
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
 
@@ -387,12 +390,12 @@ export async function createSpotAndMultiReviews(page){
   await page.waitForTimeout(1000);
   await page.goto(url);
   await page.waitForTimeout(1000);
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Leave your review here...").click();
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
 
@@ -404,10 +407,10 @@ export async function createSpotAndMultiReviews(page){
 
 export async function createSpotAndNoReview(page){
   const dummyData = createUniqueUser();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
-  await page.getByTestId("demo-user-login").click();
-  await page.getByTestId("create-new-spot-button").click();
+  await page.getByTestId(DEMO_USER_LOGIN_BUTTON_LOCATOR).click();
+  await page.getByTestId(CREATE_NEW_SPOT_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Country").click();
   await page.getByPlaceholder("Country").fill(`${dummyData.username} United`);
   await page.getByPlaceholder("Street Address").click();
@@ -468,39 +471,39 @@ export async function createSpotAndNoReview(page){
   await page.getByRole("button", { name: "Create Spot" }).click();
   await page.waitForTimeout(2000);
   let url = page.url();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByRole("button", { name: "Log Out" }).click();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Sign Up").click();
 
-  await page.getByTestId("first-name-input").click();
-  await page.getByTestId("first-name-input").fill(`Fakey ${dummyData.username}`);
-  await page.getByTestId("first-name-input").press("Tab");
-  await page.getByTestId("last-name-input").fill(dummyData.username);
-  await page.getByTestId("last-name-input").press("Tab");
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).click();
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).fill(`Fakey ${dummyData.username}`);
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).press("Tab");
   await page
-    .getByTestId("email-input")
+    .getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR)
     .fill(`${dummyData.username}@test.com`);
-  await page.getByTestId("email-input").press("Tab");
-  await page.getByTestId("username-input").fill(dummyData.username);
-  await page.getByTestId("username-input").press("Tab");
-  await page.getByTestId("password-input").fill("password");
-  await page.getByTestId("password-input").press("Tab");
-  await page.getByTestId("confirm-password-input").fill("password");
-  await page.getByTestId("form-sign-up-button").click();
+  await page.getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_FORM_BUTTON_LOCATOR).click();
   await page.waitForTimeout(2000);
   await page.goto(url);
   await page.waitForTimeout(2000);
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
 }
 
 
 export async function createSpotAndNoReviewUserOnPage(page){
   const dummyData = createUniqueUser();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
-  await page.getByTestId("demo-user-login").click();
-  await page.getByTestId("create-new-spot-button").click();
+  await page.getByTestId(DEMO_USER_LOGIN_BUTTON_LOCATOR).click();
+  await page.getByTestId(CREATE_NEW_SPOT_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Country").click();
   await page.getByPlaceholder("Country").fill(`${dummyData.username} United`);
   await page.getByPlaceholder("Street Address").click();
@@ -561,27 +564,27 @@ export async function createSpotAndNoReviewUserOnPage(page){
   await page.getByRole("button", { name: "Create Spot" }).click();
   await page.waitForTimeout(2000);
   let url = page.url();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByRole("button", { name: "Log Out" }).click();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Sign Up").click();
 
 
-  await page.getByTestId("first-name-input").click();
-  await page.getByTestId("first-name-input").fill(`Fakey ${dummyData.username}`);
-  await page.getByTestId("first-name-input").press("Tab");
-  await page.getByTestId("last-name-input").fill(dummyData.username);
-  await page.getByTestId("last-name-input").press("Tab");
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).click();
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).fill(`Fakey ${dummyData.username}`);
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).press("Tab");
   await page
-    .getByTestId("email-input")
+    .getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR)
     .fill(`${dummyData.username}@test.com`);
-  await page.getByTestId("email-input").press("Tab");
-  await page.getByTestId("username-input").fill(dummyData.username);
-  await page.getByTestId("username-input").press("Tab");
-  await page.getByTestId("password-input").fill("password");
-  await page.getByTestId("password-input").press("Tab");
-  await page.getByTestId("confirm-password-input").fill("password");
-  await page.getByTestId("form-sign-up-button").click();
+  await page.getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_FORM_BUTTON_LOCATOR).click();
   await page.waitForTimeout(2000);
   await page.goto(url);
   await page.waitForTimeout(2000);
@@ -610,13 +613,13 @@ export async function updateReviewCountCheck(page, expect){
   await page.goto(url);
   await page.waitForTimeout(2000);
 
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Leave your review here...").click();
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
 
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
 
@@ -635,13 +638,13 @@ const initialReviewCount = await page
   await page.waitForTimeout(2000);
   await page.goto(url);
   await page.waitForTimeout(2000);
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Leave your review here...").click();
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
 
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
 
@@ -667,10 +670,10 @@ expect(updatedReviewCount).not.toEqual(initialReviewCount);
 
 export async function createSpotAndSingleReviewLogInDemoUser(page){
   const dummyData = createUniqueUser();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
-  await page.getByTestId("demo-user-login").click();
-  await page.getByTestId("create-new-spot-button").click()
+  await page.getByTestId(DEMO_USER_LOGIN_BUTTON_LOCATOR).click();
+  await page.getByTestId(CREATE_NEW_SPOT_BUTTON_LOCATOR).click()
   await page.getByPlaceholder("Country").click();
   await page.getByPlaceholder("Country").fill(`${dummyData.username} United`);
   await page.getByPlaceholder("Street Address").click();
@@ -731,36 +734,36 @@ export async function createSpotAndSingleReviewLogInDemoUser(page){
   await page.getByRole("button", { name: "Create Spot" }).click();
   await page.waitForTimeout(2000);
   let url = page.url();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByRole("button", { name: "Log Out" }).click();
-  await page.getByTestId("user-menu-button").click();
+  await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Sign Up").click();
 
-  await page.getByTestId("first-name-input").click();
-  await page.getByTestId("first-name-input").fill(`Fakey ${dummyData.username}`);
-  await page.getByTestId("first-name-input").press("Tab");
-  await page.getByTestId("last-name-input").fill(dummyData.username);
-  await page.getByTestId("last-name-input").press("Tab");
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).click();
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).fill(`Fakey ${dummyData.username}`);
+  await page.getByTestId(SIGN_UP_FIRST_NAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_LAST_NAME_INPUT_LOCATOR).press("Tab");
   await page
-    .getByTestId("email-input")
+    .getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR)
     .fill(`${dummyData.username}@test.com`);
-  await page.getByTestId("email-input").press("Tab");
-  await page.getByTestId("username-input").fill(dummyData.username);
-  await page.getByTestId("username-input").press("Tab");
-  await page.getByTestId("password-input").fill("password");
-  await page.getByTestId("password-input").press("Tab");
-  await page.getByTestId("confirm-password-input").fill("password");
-  await page.getByTestId("form-sign-up-button").click();
+  await page.getByTestId(SIGN_UP_EMAIL_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).fill(dummyData.username);
+  await page.getByTestId(SIGN_UP_USERNAME_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).press("Tab");
+  await page.getByTestId(SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR).fill("password");
+  await page.getByTestId(SIGN_UP_FORM_BUTTON_LOCATOR).click();
   await page.waitForTimeout(2000);
   await page.goto(url);
   await page.waitForTimeout(2000);
-  await page.getByTestId("review-button").click();
+  await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
   await page.getByPlaceholder("Leave your review here...").click();
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
 
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
 

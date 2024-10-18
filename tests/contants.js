@@ -12,7 +12,9 @@ export const PROFILE_BUTTON_DROPDOWN_LOCATOR = 'user-dropdown-menu'
 export const LOGIN_MODAL_LOCATOR = 'login-modal' // container element
 export const LOGIN_CREDENTIAL_INPUT_LOCATOR = 'credential-input'
 export const LOGIN_PASSWORD_INPUT_LOCATOR = 'password-input'
-export const LOGIN_FORM_BUTTON_LOCATOR = 'login-button'
+export const LOGIN_FORM_BUTTON_LOCATOR = 'login-button' // button to login
+export const DEMO_USER_LOGIN_BUTTON_LOCATOR = 'demo-user-login' // button to login as demo
+
 
 // Sign Up
 export const SIGN_UP_FORM_LOCATOR = 'sign-up-form'
@@ -36,6 +38,8 @@ export const SPOT_RATING_LOCATOR = 'spot-rating'
 export const SPOT_PRICE_LOCATOR = 'spot-price'
 export const SPOT_NAME_LOCATOR = 'spot-name'
 export const SPOT_TOOLTIP_LOCATOR = 'spot-tooltip' // this is the element that should display the spot name on hover
+export const CREATE_NEW_SPOT_BUTTON_LOCATOR = 'create-new-spot-button' // this is the element on the Navbar
+
 
 // Spot Detail Page
 export const SPOT_DETAIL_PAGE_TILE_LOCATOR = 'spot-tile'

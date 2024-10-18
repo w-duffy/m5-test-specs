@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { PROFILE_BUTTON_LOCATOR, PROFILE_BUTTON_DROPDOWN_LOCATOR , LOGIN_CREDENTIAL_INPUT_LOCATOR, LOGIN_PASSWORD_INPUT_LOCATOR, LOGIN_FORM_BUTTON_LOCATOR } from './contants';
+import { PROFILE_BUTTON_LOCATOR, PROFILE_BUTTON_DROPDOWN_LOCATOR, LOGIN_CREDENTIAL_INPUT_LOCATOR, LOGIN_PASSWORD_INPUT_LOCATOR, LOGIN_FORM_BUTTON_LOCATOR } from './contants';
 test.describe('Feature: User Menu and Log Out', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(process.env.STUDENT_URL);
@@ -13,7 +13,7 @@ test.describe('Feature: User Menu and Log Out', () => {
 
     test('On every page of the site, I should be able to see a User Menu Button in the upper-right corner that opens a user drop down menu when clicked.', async ({ page }) => {
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).toBeVisible();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).toBeVisible();
     });
 
     test('After a user successfully logs in, The user drop down menu contains the logged in user\'s first name as a greeting: "Hello, "<first name>".', async ({ page }) => {
@@ -39,22 +39,22 @@ test.describe('Feature: User Menu and Log Out', () => {
 
     test('Upon clicking anywhere outside the User Menu (including on the User Menu Button), the menu drop down hides.', async ({ page }) => {
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).toBeVisible();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).toBeVisible();
 
         await page.mouse.click(0, 0);
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).not.toBeVisible();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).not.toBeVisible();
 
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).toBeVisible();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).toBeVisible();
 
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).not.toBeVisible();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).not.toBeVisible();
     });
 
     test('Upon clicking anywhere on the greeting or email inside the user drop down menu, the User Menu remains open.', async ({ page }) => {
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
-        await page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR ).click();
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).toBeVisible();
+        await page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR).click();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).toBeVisible();
     });
 
     test('Upon clicking the "Log out" menu option, it performs a log out where it will clear the session/cookie.', async ({ page, context }) => {
@@ -68,14 +68,14 @@ test.describe('Feature: User Menu and Log Out', () => {
 
     test('Upon clicking the "Log out" button, it performs a log out where it will close the user drop down menu.', async ({ page }) => {
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).toBeVisible();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).toBeVisible();
         await page.getByText(/log out/i).click();
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).not.toBeVisible();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).not.toBeVisible();
     });
 
     test('Upon clicking the "Log Out" button, it performs a log out where it will navigate the user to the home page (/).', async ({ page }) => {
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
-        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR )).toBeVisible();
+        await expect(page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR)).toBeVisible();
         await page.getByText(/log out/i).click();
         await expect(page).toHaveURL(`${process.env.STUDENT_URL}/`);
     });
@@ -84,7 +84,7 @@ test.describe('Feature: User Menu and Log Out', () => {
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
 
         const userMenuButton = await page.getByTestId(PROFILE_BUTTON_LOCATOR);
-        const userDropdownMenu = await page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR );
+        const userDropdownMenu = await page.getByTestId(PROFILE_BUTTON_DROPDOWN_LOCATOR);
 
         const buttonBox = await userMenuButton.boundingBox();
         const menuBox = await userDropdownMenu.boundingBox();
