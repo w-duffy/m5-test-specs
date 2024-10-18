@@ -3,7 +3,7 @@ import { PROFILE_BUTTON_LOCATOR, LOGIN_MODAL_LOCATOR, LOGIN_FORM_BUTTON_LOCATOR,
 
 test.describe("Feature: Log in", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test('On every page of the site, a Profile button must be at the top-right of the page.  It should have have the attribute: data-testid=PROFILE_BUTTON_LOCATOR', async ({
@@ -180,12 +180,12 @@ test.describe("Feature: Log in", () => {
     const passwordBoundingBox = await passwordInput.boundingBox();
     const loginButtonBoundingBox = await loginButton.boundingBox();
 
-    expect(usernameBoundingBox?.y).toBeLessThan(passwordBoundingBox?.y!);
+    expect(usernameBoundingBox?.y).toBeLessThan(passwordBoundingBox.y);
 
-    expect(loginButtonBoundingBox?.y).toBeGreaterThan(passwordBoundingBox?.y!);
+    expect(loginButtonBoundingBox?.y).toBeGreaterThan(passwordBoundingBox.y);
 
-    expect(usernameBoundingBox?.x).toBeGreaterThan(modalBoundingBox?.x!);
-    expect(passwordBoundingBox?.x).toBeGreaterThan(modalBoundingBox?.x!);
-    expect(loginButtonBoundingBox?.x).toBeGreaterThan(modalBoundingBox?.x!);
+    expect(usernameBoundingBox?.x).toBeGreaterThan(modalBoundingBox.x);
+    expect(passwordBoundingBox?.x).toBeGreaterThan(modalBoundingBox.x);
+    expect(loginButtonBoundingBox?.x).toBeGreaterThan(modalBoundingBox.x);
   });
 });

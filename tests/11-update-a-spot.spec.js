@@ -11,7 +11,7 @@ function generateUniqueSpotName() {
 }
 test.describe("Feature: Update a Spot", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test('Clicking "Update" on one of the spot tiles on the spot management page navigates the user to the update spot form which looks like the same as the create a new spot form, but pre-populated with the values stored in the database for the spot that was clicked, the title changed to "Update your Spot", and with a submit button text of "Update your Spot". Image URL inputs on the update spot form are optional for MVP.', async ({
@@ -126,7 +126,7 @@ test.describe("Feature: Update a Spot", () => {
       .getByRole("button", { name: "Update your Spot" })
       .boundingBox();
 
-    expect(title?.y).toBeLessThan(countryInput?.y!);
-    expect(countryInput?.y).toBeLessThan(submitButton?.y!);
+    expect(title?.y).toBeLessThan(countryInput?.y);
+    expect(countryInput?.y).toBeLessThan(submitButton?.y);
   });
 });

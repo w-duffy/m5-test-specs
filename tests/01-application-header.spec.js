@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { FAVICON_LOCATOR, LOGO_LOCATOR, PROFILE_BUTTON_LOCATOR  } from './contants';
 test.describe('Application Header', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto(process.env.STUDENT_URL!);
+    await page.goto(process.env.STUDENT_URL);
   });
 
   test('On every page of the site, the browser tab shows the app name and fav icon', async ({ page }) => {
@@ -17,7 +17,7 @@ test.describe('Application Header', () => {
     await expect(logo).toBeVisible();
 
     await logo.click();
-    await expect(page).toHaveURL(process.env.STUDENT_URL!);
+    await expect(page).toHaveURL(process.env.STUDENT_URL);
   });
 
   test("As the browser is resized, the header's width adjusts dynamically so the logo stays on the left, and the auth/user buttons stay on the right.", async ({ page }) => {

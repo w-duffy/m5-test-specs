@@ -7,7 +7,7 @@ test.describe('Feature: View Spot Details', () => {
     The Demo user will be on the newly created spot's page at the beginning of the test.
     */
     test.beforeEach(async ({ page }) => {
-        await page.goto(process.env.STUDENT_URL!);
+        await page.goto(process.env.STUDENT_URL);
         await loginDemoUser(page)
         await createSpot(page)
     });
@@ -65,32 +65,32 @@ test.describe('Feature: View Spot Details', () => {
 
         const spotName = await page.getByTestId(SPOT_HEADING_LOCATOR).boundingBox();
         const location = await page.getByTestId(SPOT_DETAIL_PAGE_LOCATION_LOCATOR).boundingBox();
-        expect(spotName?.y).toBeLessThan(location?.y!);
+        expect(spotName?.y).toBeLessThan(location?.y);
 
 
         const largeImage = await page.getByTestId(SPOT_LARGE_IMAGE_LOCATOR).boundingBox();
-        expect(largeImage?.y).toBeGreaterThan(location?.y!);
+        expect(largeImage?.y).toBeGreaterThan(location?.y);
 
 
         const smallImages = await page.getByTestId(SPOT_SMALL_IMAGE_LOCATOR).all();
         const firstSmallImage = await smallImages[0].boundingBox();
-        expect(firstSmallImage?.x).toBeGreaterThanOrEqual(largeImage?.x! + largeImage?.width!);
+        expect(firstSmallImage?.x).toBeGreaterThanOrEqual(largeImage?.x + largeImage?.width);
 
 
         const host = await page.getByTestId(SPOT_HOST_LOCATOR).boundingBox();
-        expect(host?.y).toBeGreaterThanOrEqual(largeImage?.y! + largeImage?.height!);
+        expect(host?.y).toBeGreaterThanOrEqual(largeImage?.y + largeImage?.height);
 
 
         const description = await page.getByTestId(SPOT_DESCRIPTION_LOCATOR).boundingBox();
-        expect(description?.y).toBeGreaterThanOrEqual(host?.y! + host?.height!);
+        expect(description?.y).toBeGreaterThanOrEqual(host?.y + host?.height);
 
 
         const calloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).boundingBox();
         const viewportSize = page.viewportSize();
-        expect(calloutBox?.x!+ calloutBox?.width!).toBeCloseTo(viewportSize?.width!, -3);
+        expect(calloutBox?.x+ calloutBox?.width).toBeCloseTo(viewportSize?.width, -3);
 
 
         const reserveButton = await page.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR).boundingBox();
-        expect(reserveButton?.y! + reserveButton?.height!).toBeCloseTo(calloutBox?.y! + calloutBox?.height!, -2);
+        expect(reserveButton?.y + reserveButton?.height).toBeCloseTo(calloutBox?.y + calloutBox?.height, -2);
     });
 });
