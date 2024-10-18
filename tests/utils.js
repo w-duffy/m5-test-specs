@@ -1,5 +1,5 @@
 // adds consts
-import { SIGN_UP_EMAIL_INPUT_LOCATOR, SPOT_TILE_LOCATOR, CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR, SIGN_UP_PASSWORD_INPUT_LOCATOR, SIGN_UP_FORM_BUTTON_LOCATOR, SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR, SIGN_UP_USERNAME_INPUT_LOCATOR, SIGN_UP_LAST_NAME_INPUT_LOCATOR, PROFILE_BUTTON_LOCATOR, DEMO_USER_LOGIN_BUTTON_LOCATOR, CREATE_NEW_SPOT_BUTTON_LOCATOR, SIGN_UP_FIRST_NAME_INPUT_LOCATOR, LOGIN_CREDENTIAL_INPUT_LOCATOR, LOGIN_PASSWORD_INPUT_LOCATOR, LOGIN_FORM_BUTTON_LOCATOR, CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR } from './contants';
+import { SPOT_CALLOUT_BOX_LOCATOR, REVIEW_HEADING_LOCATOR, REVIEW_COUNT_LOCATOR, SIGN_UP_EMAIL_INPUT_LOCATOR, SPOT_TILE_LOCATOR, CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR, SIGN_UP_PASSWORD_INPUT_LOCATOR, SIGN_UP_FORM_BUTTON_LOCATOR, SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR, SIGN_UP_USERNAME_INPUT_LOCATOR, SIGN_UP_LAST_NAME_INPUT_LOCATOR, PROFILE_BUTTON_LOCATOR, DEMO_USER_LOGIN_BUTTON_LOCATOR, CREATE_NEW_SPOT_BUTTON_LOCATOR, SIGN_UP_FIRST_NAME_INPUT_LOCATOR, LOGIN_CREDENTIAL_INPUT_LOCATOR, LOGIN_PASSWORD_INPUT_LOCATOR, LOGIN_FORM_BUTTON_LOCATOR, CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR } from './contants';
 export function createUniqueUser() {
   return {
     firstName: "Fakey",
@@ -626,12 +626,12 @@ export async function updateReviewCountCheck(page, expect){
   await page.getByRole("button", { name: "Submit Your Review" }).click();
   await page.waitForTimeout(2000);
   const initialRating = await page
-  .getByTestId("reviews-heading")
-  .getByTestId("review-count")
+  .getByTestId(REVIEW_HEADING_LOCATOR)
+  .getByTestId(REVIEW_COUNT_LOCATOR)
   .textContent();
 const initialReviewCount = await page
-  .getByTestId("spot-callout-box")
-  .getByTestId("review-count")
+  .getByTestId(SPOT_CALLOUT_BOX_LOCATOR)
+  .getByTestId(REVIEW_COUNT_LOCATOR)
   .textContent();
 
   await encapsulateUserCreation(page)
@@ -652,12 +652,12 @@ const initialReviewCount = await page
   await page.waitForTimeout(2000);
 
   const updatedRating = await page
-  .getByTestId("reviews-heading")
-  .getByTestId("review-count")
+  .getByTestId(REVIEW_HEADING_LOCATOR)
+  .getByTestId(REVIEW_COUNT_LOCATOR)
   .textContent();
 const updatedReviewCount = await page
-  .getByTestId("spot-callout-box")
-  .getByTestId("review-count")
+  .getByTestId(SPOT_CALLOUT_BOX_LOCATOR)
+  .getByTestId(REVIEW_COUNT_LOCATOR)
   .textContent();
 
 expect(updatedRating).not.toEqual(initialRating);
