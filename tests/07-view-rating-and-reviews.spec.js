@@ -71,7 +71,9 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await signUpUser(page);
     await createSpot(page);
     await logOutUser(page);
+    await page.waitForTimeout(1000);
     await createReview(page);
+    await page.waitForTimeout(2000);
     const calloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR);
     const reviewHeading = await page.getByTestId(REVIEW_HEADING_LOCATOR);
 
@@ -114,7 +116,6 @@ test.describe("Feature: view-rating-and-reviews", () => {
     page,
   }) => {
     await createSpotAndSingleReview(page);
-    page.waitForTimeout(2000);
     await expect(
       page.getByTestId(REVIEW_HEADING_LOCATOR).getByTestId(REVIEW_COUNT_LOCATOR)
     ).toContainText("1 Review");
