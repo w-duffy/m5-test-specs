@@ -91,7 +91,7 @@ test.describe('Feature: Sign Up', () => {
 
     test('The "Sign up" button should be disabled when the "Password" field is less than 6 characters.', async ({ page }) => {
         await page.getByText('Sign up').click();
-        const fields = [signUpFirstNameInputLocator, signUpLastNameInputLocator, signUpEmailInputLocator];
+        const fields = [signUpFirstNameInputLocator, signUpLastNameInputLocator, signUpUsernameInputLocator, signUpEmailInputLocator];
         for (const field of fields) {
             await page.getByTestId(field).fill('testingALongString');
         }

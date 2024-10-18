@@ -47,7 +47,7 @@ test.describe('Feature: Create a New Spot', () => {
     test('The second section should include: a heading of "Describe your place to guests", a caption of "Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.", and a text area with a placeholder of "Please write at least 30 characters".', async ({ page }) => {
         const section = await page.getByTestId('section-2')
         await expect(section.getByTestId('section-2-heading')).toHaveText('Describe your place to guests');
-        await expect(section.getByTestId('section-2-caption')).toHaveText('Mention the best features of your space, any special amentities like fast wifi or parking, and what you love about the neighborhood.');
+        await expect(section.getByTestId('section-2-caption')).toHaveText('Mention the best features of your space, any special amenities like fast wifi or parking, and what you love about the neighborhood.');
         await expect(section.getByPlaceholder('Please write at least 30 characters')).toBeVisible();
 
     })

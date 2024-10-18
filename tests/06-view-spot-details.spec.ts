@@ -1,17 +1,16 @@
 import { test, expect } from '@playwright/test';
+import { createSpot, loginDemoUser } from './utils';
 
 test.describe('Feature: View Spot Details', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(process.env.STUDENT_URL!);
-        const firstSpot = page.getByTestId('spot-tile').first();
-
-        const anchorTag = await firstSpot.locator('a');
-
-        await anchorTag.click();
+        await loginDemoUser(page)
+        await createSpot(page)
     });
 
     test('On the spot\'s detail page, the following information should be present: a Heading <spot name>, Location: <city>, <state>, <country>, Images (1 large image and 4 small images), Text: Hosted by <first name>, <last name>, Paragraph: <description>, and the callout information box on the right, below the images.', async ({ page }) => {
-
+        // await loginDemoUser(page)
+        // await createSpot(page)
         await expect(page.getByTestId('spot-name')).toBeVisible();
 
 

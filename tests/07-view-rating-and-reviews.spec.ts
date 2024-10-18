@@ -39,7 +39,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await expect(ratingElement).toBeVisible();
     const ratingText = await ratingElement.textContent();
     expect(
-      ratingText?.match(/New/i) || isNaN((parseFloat(ratingText!)))
+      ratingText?.match(/New/i) || !isNaN((parseFloat(ratingText!)))
     ).toBeTruthy();
 
     const locationElement = spotTile.getByTestId("spot-city");
