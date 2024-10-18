@@ -1,6 +1,4 @@
-# M5 Test Specs (Early Access)
-
-> ⚠️ These tests are currently a work in progress. Please report any issues you find.  Thank you!
+# M5 Test Specs
 
 This repository contains the test specs for the M5 project.  These tests are written using [Playwright](https://playwright.dev/docs/intro).
 
@@ -8,8 +6,10 @@ This repository contains the test specs for the M5 project.  These tests are wri
 
 
 ## Setup and Usage
+You can watch the walkthrough video on 2x speed in addition to the below instructions.
 
-### Install the Dependencies
+### Install Playwright and Dependencies
+- `npx playwright install --with-deps chromium`
 - `npm install`
 
 ### Add Environment Variables
@@ -80,7 +80,7 @@ await page.getByTestId('login-button').click()
 
 ## Quickstart -- Working with UI Mode
 
-> 💡Enable Dark Mode 
+> 💡Enable Dark Mode
 ![dark mode](./screenshots/darkmode.png)
 
 Click the green arrow circled in the screenshot below to run all tests:
