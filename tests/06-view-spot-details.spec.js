@@ -9,6 +9,7 @@ test.describe('Feature: View Spot Details', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(process.env.STUDENT_URL);
         await loginDemoUser(page)
+        await page.waitForTimeout(1000);
         await createSpot(page)
     });
 

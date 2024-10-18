@@ -5,6 +5,7 @@ test.describe('Feature: Create a New Spot', () => {
     test.beforeEach(async ({ page }) => {
         await page.goto(process.env.STUDENT_URL);
         await loginDemoUser(page)
+        await page.waitForTimeout(1000);
         await page.getByText('Create a New Spot').click();
     });
 

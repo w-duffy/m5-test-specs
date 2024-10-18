@@ -103,7 +103,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
     page,
   }) => {
     await createSpotAndMultiReviews(page);
-    page.waitForTimeout(2000);
+    await page.waitForTimeout(2000);
     await expect(
       page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).getByTestId(REVIEW_COUNT_LOCATOR)
     ).toContainText("2 Reviews");
