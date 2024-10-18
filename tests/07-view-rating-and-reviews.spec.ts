@@ -12,6 +12,7 @@ import {
   createSpotAndNoReview,
   createSpotAndNoReviewUserOnPage
 } from "./utils";
+import { SPOT_DETAIL_PAGE_TILE_LOCATOR, SPOT_DETAIL_PAGE_LOCATION_LOCATOR, SPOT_DETAIL_PAGE_RATING_LOCATOR, SPOT_DETAIL_PAGE_CITY_LOCATOR, SPOT_CALLOUT_BOX_LOCATOR, REVIEW_LIST_LOCATOR, REVIEW_ITEM_LOCATOR, REVIEW_DATE_LOCATOR, REVIEW_TEXT_LOCATOR, REVIEW_STAR_CLICKABLE_LOCATOR, REVIEW_BUTTON_LOCATOR, REVIEW_COUNT_LOCATOR, REVIEW_HEADING_LOCATOR } from './contants';
 const test = base.extend({
   context: async ({}, use) => {
     const browser = await chromium.launch();
@@ -34,15 +35,15 @@ test.describe("Feature: view-rating-and-reviews", () => {
     page,
   }) => {
     await page.goto(process.env.STUDENT_URL!);
-    const spotTile = page.getByTestId("spot-tile").first();
-    const ratingElement = spotTile.getByTestId("spot-rating");
+    const spotTile = page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first();
+    const ratingElement = spotTile.getByTestId(SPOT_DETAIL_PAGE_RATING_LOCATOR);
     await expect(ratingElement).toBeVisible();
     const ratingText = await ratingElement.textContent();
     expect(
       ratingText?.match(/New/i) || !isNaN((parseFloat(ratingText!)))
     ).toBeTruthy();
 
-    const locationElement = spotTile.getByTestId("spot-city");
+    const locationElement = spotTile.getByTestId(SPOT_DETAIL_PAGE_CITY_LOCATOR);
     const ratingBox = await ratingElement.boundingBox();
     const locationBox = await locationElement.boundingBox();
     expect(ratingBox?.y).toBeGreaterThanOrEqual(locationBox?.y!);
@@ -52,18 +53,14 @@ test.describe("Feature: view-rating-and-reviews", () => {
   test("When viewing a spot's detail page, the review summary info should be in two different places, the callout information box and the heading before the list of reviews. The review summary info should show the average star rating of all the reviews for that spot and the review count for that spot", async ({
     page,
   }) => {
-    // await createSpotAndSingleReview(page);
-    // await createSpot(page);
-    // await logOutUser(page);
-    // await createReview(page);
-    // const dummyData = createUniqueUser();
+
     await createSpotAndSingleReview(page);
-    const calloutBox = page.getByTestId("spot-callout-box");
-    const reviewHeading = page.getByTestId("reviews-heading");
+    const calloutBox = page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR);
+    const reviewHeading = page.getByTestId(REVIEW_HEADING_LOCATOR);
 
     for (const element of [calloutBox, reviewHeading]) {
-      const ratingElement = element.getByTestId("spot-rating");
-      const reviewCountElement = element.getByTestId("review-count");
+      const ratingElement = element.getByTestId(SPOT_DETAIL_PAGE_RATING_LOCATOR);
+      const reviewCountElement = element.getByTestId(REVIEW_COUNT_LOCATOR);
 
       await expect(ratingElement).toBeVisible();
       await expect(reviewCountElement).toBeVisible();
@@ -77,14 +74,14 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await createSpot(page);
     await logOutUser(page);
     await createReview(page);
-    const calloutBox = await page.getByTestId("spot-callout-box");
-    const reviewHeading = await page.getByTestId("reviews-heading");
+    const calloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR);
+    const reviewHeading = await page.getByTestId(REVIEW_HEADING_LOCATOR);
 
     // TODO: Add check for star icon
     // Free points for now!
 
     for (const element of [calloutBox, reviewHeading]) {
-      const ratingText = await element.getByTestId("spot-rating").textContent();
+      const ratingText = await element.getByTestId(SPOT_DETAIL_PAGE_RATING_LOCATOR).textContent();
       expect(ratingText).toMatch(/^.\d+\.\d+$/);
     }
   });
@@ -95,9 +92,9 @@ test.describe("Feature: view-rating-and-reviews", () => {
     const dummyData = createUniqueUser();
     await encapsulateSpotCreation(page, dummyData);
     await expect(
-      page.getByTestId("spot-callout-box").getByRole("paragraph")
+      page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).getByRole("paragraph")
     ).toContainText("New");
-    await expect(page.getByTestId("reviews-heading")).toContainText("New");
+    await expect(page.getByTestId(REVIEW_HEADING_LOCATOR)).toContainText("New");
     // TODO: Add check for star icon
     // Free points for now!
   });
@@ -108,10 +105,10 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await createSpotAndMultiReviews(page);
     page.waitForTimeout(2000);
     await expect(
-      page.getByTestId("spot-callout-box").getByTestId("review-count")
+      page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).getByTestId(REVIEW_COUNT_LOCATOR)
     ).toContainText("2 Reviews");
     await expect(
-      page.getByTestId("reviews-heading").getByTestId("review-count")
+      page.getByTestId(REVIEW_HEADING_LOCATOR).getByTestId(REVIEW_COUNT_LOCATOR)
     ).toContainText("2 Reviews");
   });
 
@@ -121,10 +118,10 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await createSpotAndSingleReview(page);
     page.waitForTimeout(2000);
     await expect(
-      page.getByTestId("reviews-heading").getByTestId("review-count")
+      page.getByTestId(REVIEW_HEADING_LOCATOR).getByTestId(REVIEW_COUNT_LOCATOR)
     ).toContainText("1 Review");
     await expect(
-      page.getByTestId("spot-callout-box").getByTestId("review-count")
+      page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).getByTestId(REVIEW_COUNT_LOCATOR)
     ).toContainText("1 Review");
   });
 
@@ -133,11 +130,11 @@ test.describe("Feature: view-rating-and-reviews", () => {
   }) => {
     await createSpotAndSingleReview(page);
     page.waitForTimeout(2000);
-    await expect(page.getByTestId("reviews-heading")).toContainText(
+    await expect(page.getByTestId(REVIEW_HEADING_LOCATOR)).toContainText(
       /\d\.\d+\s*\d+\sReview/
     );
 
-    await expect(page.getByTestId("spot-callout-box")).toContainText(
+    await expect(page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR)).toContainText(
       /\d\.\d+\s*\d+\sReview/
     );
   });
@@ -149,9 +146,9 @@ test.describe("Feature: view-rating-and-reviews", () => {
     await encapsulateSpotCreation(page, dummyData);
     page.waitForTimeout(2000);
     await expect(
-      page.getByTestId("spot-callout-box").getByRole("paragraph")
+      page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).getByRole("paragraph")
     ).not.toContainText("Review");
-    await expect(page.getByTestId("reviews-heading")).not.toContainText(
+    await expect(page.getByTestId(REVIEW_HEADING_LOCATOR)).not.toContainText(
       "Review"
     );
   });
@@ -159,15 +156,15 @@ test.describe("Feature: view-rating-and-reviews", () => {
   test("Need a Test: When viewing the spot's detail page, show a list of the reviews for the spot below the spot's information with the newest reviews at the top, and the oldest reviews at the bottom.", async ({
     page,
   }) => {
-    const reviewsList = page.getByTestId("reviews-list");
-    const reviews = await reviewsList.getByTestId("review-item").all();
+    const reviewsList = page.getByTestId(REVIEW_LIST_LOCATOR);
+    const reviews = await reviewsList.getByTestId(REVIEW_ITEM_LOCATOR).all();
 
     for (let i = 1; i < reviews.length; i++) {
       const prevReviewDate = await reviews[i - 1]
-        .getByTestId("review-date")
+        .getByTestId(REVIEW_DATE_LOCATOR)
         .textContent();
       const currReviewDate = await reviews[i]
-        .getByTestId("review-date")
+        .getByTestId(REVIEW_DATE_LOCATOR)
         .textContent();
       expect(new Date(prevReviewDate!).getTime()).toBeGreaterThan(
         new Date(currReviewDate!).getTime()
@@ -179,13 +176,13 @@ test.describe("Feature: view-rating-and-reviews", () => {
     page,
   }) => {
     await createSpotAndSingleReview(page);
-    await page.getByTestId("review-list").first();
+    await page.getByTestId(REVIEW_LIST_LOCATOR).first();
 
     await expect(
-      page.getByTestId("review-list").first().getByText("Fakey")
+      page.getByTestId(REVIEW_LIST_LOCATOR).first().getByText("Fakey")
     ).toBeVisible();
     await expect(
-      page.getByTestId("review-list").first().getByText("October")
+      page.getByTestId(REVIEW_LIST_LOCATOR).first().getByText("October")
     ).toBeVisible();
   });
 
@@ -202,13 +199,13 @@ test.describe("Feature: view-rating-and-reviews", () => {
     page,
   }) => {
     await createSpotAndSingleReview(page);
-    const spotInfo = await page.getByTestId("spot-location").boundingBox();
-    const reviewsSection = await page.getByTestId("review-list").boundingBox();
+    const spotInfo = await page.getByTestId(SPOT_DETAIL_PAGE_LOCATION_LOCATOR).boundingBox();
+    const reviewsSection = await page.getByTestId(REVIEW_LIST_LOCATOR).boundingBox();
     expect(reviewsSection?.y!).toBeGreaterThan(
       spotInfo?.y! + spotInfo?.height!
     );
 
-    const calloutBox = await page.getByTestId("spot-callout-box").boundingBox();
+    const calloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).boundingBox();
     const viewportSize = page.viewportSize();
     expect(calloutBox?.x! + calloutBox?.width!).toBeCloseTo(
       viewportSize?.width!,
@@ -216,9 +213,9 @@ test.describe("Feature: view-rating-and-reviews", () => {
     );
 
     const reviewHeading = await page
-      .getByTestId("reviews-heading")
+      .getByTestId(REVIEW_HEADING_LOCATOR)
       .boundingBox();
-    const reviewsList = await page.getByTestId("review-list").boundingBox();
+    const reviewsList = await page.getByTestId(REVIEW_LIST_LOCATOR).boundingBox();
     expect(reviewsList?.y!).toBeGreaterThan(
       reviewHeading?.y! + reviewHeading?.height!
     );

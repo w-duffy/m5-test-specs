@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { createSpot, signUpUser } from "./utils";
-
+import { SPOT_TILE_LOCATOR, SPOT_NAME_LOCATOR, SPOT_PRICE_LOCATOR, SPOT_DESCRIPTION_LOCATOR } from './contants';
 function generateUniqueSpotName() {
   const letters = Array.from({ length: 6 }, () =>
     String.fromCharCode(Math.floor(Math.random() * 26) + 97)
@@ -22,7 +22,7 @@ test.describe("Feature: Update a Spot", () => {
     await page.goto(`${process.env.STUDENT_URL}/spots/current`);
 
     await page
-      .getByTestId("spot-tile")
+      .getByTestId(SPOT_TILE_LOCATOR)
       .first()
       .getByRole("button", { name: "Update" })
       .click();
@@ -55,7 +55,7 @@ test.describe("Feature: Update a Spot", () => {
     const name = generateUniqueSpotName();
 
     await page
-      .getByTestId("spot-tile")
+      .getByTestId(SPOT_TILE_LOCATOR)
       .first()
       .getByRole("button", { name: "Update" })
       .click();
@@ -68,7 +68,7 @@ test.describe("Feature: Update a Spot", () => {
 
     await expect(page).toHaveURL(/\/spots\/\d+$/);
 
-    await expect(page.getByTestId("spot-name")).toContainText(
+    await expect(page.getByTestId(SPOT_NAME_LOCATOR)).toContainText(
       `Updated Name ${name}`
     );
   });
@@ -81,7 +81,7 @@ test.describe("Feature: Update a Spot", () => {
     await page.goto(`${process.env.STUDENT_URL}/spots/current`);
 
     await page
-      .getByTestId("spot-tile")
+      .getByTestId(SPOT_TILE_LOCATOR)
       .first()
       .getByRole("button", { name: "Update" })
       .click();
@@ -97,11 +97,11 @@ test.describe("Feature: Update a Spot", () => {
 
     await page.getByRole("button", { name: "Update your Spot" }).click();
 
-    await expect(page.getByTestId("spot-name")).toContainText(
+    await expect(page.getByTestId(SPOT_NAME_LOCATOR)).toContainText(
       `Updated Spot ${name}`
     );
-    await expect(page.getByTestId("spot-price")).toContainText("$150");
-    await expect(page.getByTestId("spot-description")).toContainText(
+    await expect(page.getByTestId(SPOT_PRICE_LOCATOR)).toContainText("$150");
+    await expect(page.getByTestId(SPOT_DESCRIPTION_LOCATOR)).toContainText(
       "This is an updated description."
     );
   });
@@ -113,7 +113,7 @@ test.describe("Feature: Update a Spot", () => {
     await createSpot(page);
     await page.goto(`${process.env.STUDENT_URL}/spots/current`);
     await page
-      .getByTestId("spot-tile")
+      .getByTestId(SPOT_TILE_LOCATOR)
       .first()
       .getByRole("button", { name: "Update" })
       .click();

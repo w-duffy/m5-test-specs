@@ -1,7 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { createSpot, loginDemoUser } from './utils';
-
+import { SPOT_HEADING_LOCATOR, SPOT_DETAIL_PAGE_LOCATION_LOCATOR, SPOT_LARGE_IMAGE_LOCATOR, SPOT_SMALL_IMAGE_LOCATOR, SPOT_HOST_LOCATOR, SPOT_DESCRIPTION_LOCATOR, SPOT_CALLOUT_BOX_LOCATOR, SPOT_PRICE_DETAIL_PAGE_LOCATOR, SPOT_RESERVE_BUTTON_LOCATOR } from './contants';
 test.describe('Feature: View Spot Details', () => {
+    /*
+    Before each test, we need to create a spot and login the demo user.
+    The Demo user will be on the newly created spot's page at the beginning of the test.
+    */
     test.beforeEach(async ({ page }) => {
         await page.goto(process.env.STUDENT_URL!);
         await loginDemoUser(page)
@@ -9,45 +13,43 @@ test.describe('Feature: View Spot Details', () => {
     });
 
     test('On the spot\'s detail page, the following information should be present: a Heading <spot name>, Location: <city>, <state>, <country>, Images (1 large image and 4 small images), Text: Hosted by <first name>, <last name>, Paragraph: <description>, and the callout information box on the right, below the images.', async ({ page }) => {
-        // await loginDemoUser(page)
-        // await createSpot(page)
-        await expect(page.getByTestId('spot-name')).toBeVisible();
+        await expect(page.getByTestId(SPOT_HEADING_LOCATOR)).toBeVisible();
 
 
-        await expect(page.getByTestId('spot-location')).toBeVisible();
-        const locationText = await page.getByTestId('spot-location').textContent();
+        await expect(page.getByTestId(SPOT_DETAIL_PAGE_LOCATION_LOCATOR)).toBeVisible();
+        const locationText = await page.getByTestId(SPOT_DETAIL_PAGE_LOCATION_LOCATOR).textContent();
         // looking for: city, state, country
         expect(locationText).toMatch(/[\w\s]+,\s[\w\s]+,\s[\w\s]+/);
 
-        const largeImage = page.getByTestId('spot-large-image');
+        const largeImage = page.getByTestId(SPOT_LARGE_IMAGE_LOCATOR);
         await expect(largeImage).toBeVisible();
-        const smallImages = await page.getByTestId('spot-small-image').all();
+        const smallImages = await page.getByTestId(SPOT_SMALL_IMAGE_LOCATOR).all();
         expect(smallImages.length).toBe(4);
 
-        await expect(page.getByTestId('spot-host')).toBeVisible();
-        const hostText = await page.getByTestId('spot-host').textContent();
+        await expect(page.getByTestId(SPOT_HOST_LOCATOR)).toBeVisible();
+        const hostText = await page.getByTestId(SPOT_HOST_LOCATOR).textContent();
         expect(hostText).toMatch(/Hosted by \w+ \w+/);
 
-        await expect(page.getByTestId('spot-description')).toBeVisible();
+        await expect(page.getByTestId(SPOT_DESCRIPTION_LOCATOR)).toBeVisible();
 
-        await expect(page.getByTestId('spot-callout-box')).toBeVisible();
+        await expect(page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR)).toBeVisible();
     });
 
     test('The callout information box on the right of the spot\'s detail page should state the price for the spot followed by the label "night", and have a "Reserve" button.', async ({ page }) => {
-        const calloutBox = page.getByTestId('spot-callout-box');
+        const calloutBox = page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR);
 
-        const priceElement = calloutBox.getByTestId('spot-price');
+        const priceElement = calloutBox.getByTestId( SPOT_PRICE_DETAIL_PAGE_LOCATOR);
         await expect(priceElement).toBeVisible();
         const priceText = await priceElement.textContent();
         expect(priceText).toMatch(/\$\s?\d+(,\d{3})*(\.\d{2})?\s*(\/\s*)?night/);
 
-        const reserveButton = calloutBox.getByTestId('reserve-button');
+        const reserveButton = calloutBox.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR);
         await expect(reserveButton).toBeVisible();
         expect(await reserveButton.textContent()).toBe('Reserve');
     });
 
     test('When the "Reserve" button on the spot\'s detail page is clicked, it should open an alert with the text "Feature coming soon".', async ({ page }) => {
-        const reserveButton = page.getByTestId('reserve-button');
+        const reserveButton = page.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR);
 
 
         page.once('dialog', async dialog => {
@@ -61,34 +63,34 @@ test.describe('Feature: View Spot Details', () => {
 
     test('The layout and element positioning is equivalent to the wireframes.', async ({ page }) => {
 
-        const spotName = await page.getByTestId('spot-name').boundingBox();
-        const location = await page.getByTestId('spot-location').boundingBox();
+        const spotName = await page.getByTestId(SPOT_HEADING_LOCATOR).boundingBox();
+        const location = await page.getByTestId(SPOT_DETAIL_PAGE_LOCATION_LOCATOR).boundingBox();
         expect(spotName?.y).toBeLessThan(location?.y!);
 
 
-        const largeImage = await page.getByTestId('spot-large-image').boundingBox();
+        const largeImage = await page.getByTestId(SPOT_LARGE_IMAGE_LOCATOR).boundingBox();
         expect(largeImage?.y).toBeGreaterThan(location?.y!);
 
 
-        const smallImages = await page.getByTestId('spot-small-image').all();
+        const smallImages = await page.getByTestId(SPOT_SMALL_IMAGE_LOCATOR).all();
         const firstSmallImage = await smallImages[0].boundingBox();
         expect(firstSmallImage?.x).toBeGreaterThanOrEqual(largeImage?.x! + largeImage?.width!);
 
 
-        const host = await page.getByTestId('spot-host').boundingBox();
+        const host = await page.getByTestId(SPOT_HOST_LOCATOR).boundingBox();
         expect(host?.y).toBeGreaterThanOrEqual(largeImage?.y! + largeImage?.height!);
 
 
-        const description = await page.getByTestId('spot-description').boundingBox();
+        const description = await page.getByTestId(SPOT_DESCRIPTION_LOCATOR).boundingBox();
         expect(description?.y).toBeGreaterThanOrEqual(host?.y! + host?.height!);
 
 
-        const calloutBox = await page.getByTestId('spot-callout-box').boundingBox();
+        const calloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).boundingBox();
         const viewportSize = page.viewportSize();
         expect(calloutBox?.x!+ calloutBox?.width!).toBeCloseTo(viewportSize?.width!, -3);
 
 
-        const reserveButton = await page.getByTestId('reserve-button').boundingBox();
+        const reserveButton = await page.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR).boundingBox();
         expect(reserveButton?.y! + reserveButton?.height!).toBeCloseTo(calloutBox?.y! + calloutBox?.height!, -2);
     });
 });

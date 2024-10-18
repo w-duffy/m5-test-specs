@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { updateReviewCountCheck, createSpotAndSingleReview, encapsulateSpotCreation, createSpot, loginDemoUser, signUpUser, logOutUser, createSpotAndNoReviewUserOnPage } from "./utils";
-
+import { updateReviewCountCheck, createSpotAndSingleReview, encapsulateSpotCreation, signUpUser, createSpotAndNoReviewUserOnPage } from "./utils";
+import { CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR, CREATE_A_REVIEW_MODAL_LOCATOR, CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR, REVIEW_HEADING_LOCATOR, SPOT_LINK_TO_SPOT_PAGE_LOCATOR, SPOT_TILE_LOCATOR, REVIEW_LIST_LOCATOR } from './contants';
 test.describe("Feature: Post a Review", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(process.env.STUDENT_URL!);
@@ -9,13 +9,12 @@ test.describe("Feature: Post a Review", () => {
   test('If the current user is logged-in and they are viewing a spot\'s detail page for a spot that they HAVE NOT posted a review yet, a "Post Your Review" button shows between the rating/reviews heading and the list of reviews.', async ({
     page,
   }) => {
-
     await createSpotAndNoReviewUserOnPage(page);
     await page.waitForTimeout(2000);
-    const reviewButton = page.getByTestId("review-button");
+    const reviewButton = page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR);
     await expect(reviewButton).toBeVisible();
 
-    const ratingHeading = page.getByTestId("reviews-heading");
+    const ratingHeading = page.getByTestId(REVIEW_HEADING_LOCATOR);
     const reviewsList = page.getByText(/Be the first/i);
     const buttonBox = await reviewButton.boundingBox();
     const headingBox = await ratingHeading.boundingBox();
@@ -30,11 +29,9 @@ test.describe("Feature: Post a Review", () => {
   test('If the current user is logged-in and they are viewing a spot\'s detail page for a spot that they are an owner of, the "Post Your Review" button should be hidden.', async ({
     page,
   }) => {
-    // await signUpUser(page);
-    // await createSpot(page);
     await encapsulateSpotCreation(page);
     await page.waitForTimeout(2000);
-    const reviewButton = page.getByTestId("review-button");
+    const reviewButton = page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR);
     await expect(reviewButton).toBeHidden();
   });
 
@@ -43,7 +40,7 @@ test.describe("Feature: Post a Review", () => {
   }) => {
     await createSpotAndSingleReview(page);
     await page.waitForTimeout(2000);
-    const reviewButton = page.getByTestId("review-button");
+    const reviewButton = page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR);
     await expect(reviewButton).toBeHidden();
   });
 
@@ -51,19 +48,17 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
     await page.goto(process.env.STUDENT_URL!);
-    await page.getByTestId("spot-link").first().click();
-    await expect(page.getByTestId("review-button")).not.toBeVisible();
-    // const reviewButton = page.getByTestId("review-button");
-    // await expect(reviewButton).toBeHidden();
+    await page.getByTestId(SPOT_LINK_TO_SPOT_PAGE_LOCATOR).first().click();
+    await expect(page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR)).not.toBeVisible();
   });
 
   test('Clicking "Post Your Review", opens a modal popup window containing the new review form.', async ({
     page,
   }) => {
     await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
-    await page.getByTestId("review-button").click();
-    const modal = page.getByTestId("review-modal");
+    await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
+    const modal = page.getByTestId(CREATE_A_REVIEW_MODAL_LOCATOR);
     await expect(modal).toBeVisible();
   });
 
@@ -71,8 +66,8 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
     await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
-    await page.getByTestId("review-button").click();
+    await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
 
     const reviewTitle = page.getByText("How was your stay?");
     await expect(reviewTitle).toBeVisible();
@@ -82,8 +77,8 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
     await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
-    await page.getByTestId("review-button").click();
+    await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
     const textarea = page.getByPlaceholder("Leave your review here...");
     await expect(textarea).toBeVisible();
   });
@@ -92,9 +87,9 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
     await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
-    await page.getByTestId("review-button").click();
-    const starRating = await page.getByTestId("review-star-clickable").all()
+    await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
+    const starRating = await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()
     await expect(starRating).toHaveLength(5);
     const starsLabel = page.getByText("Stars");
     await expect(starsLabel).toBeVisible();
@@ -104,8 +99,8 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
     await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
-    await page.getByTestId("review-button").click();
+    await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
     await expect(
       page.getByRole("button", { name: "Submit Your Review" })
     ).toBeVisible();
@@ -115,8 +110,8 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
     await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
-    await page.getByTestId("review-button").click();
+    await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
     let submitButton = page.getByRole("button", { name: "Submit Your Review" });
     await expect(submitButton).toBeDisabled();
 
@@ -125,7 +120,7 @@ test.describe("Feature: Post a Review", () => {
 
     // await page.getByTestId("star-rating").all().click();
     await page.getByPlaceholder("Leave your review here...").fill("");
-    for (let star of await page.getByTestId("review-star-clickable").all()) {
+    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
       await star.click();
     }
     await expect(submitButton).toBeDisabled();
@@ -142,18 +137,18 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
     await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
-    await page.getByTestId("review-button").click();
+    await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
     await page
       .getByPlaceholder("Leave your review here...")
       .fill("This is an awesome review comment for testing!");
-      for (let star of await page.getByTestId("review-star-clickable").all()) {
+      for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
         await star.click();
       }
 
     await page.getByRole("button", { name: "Submit Your Review" }).click();
 
-    const firstReview = page.getByTestId("review-list").first();
+    const firstReview = page.getByTestId(REVIEW_LIST_LOCATOR).first();
     await expect(firstReview).toContainText(
       "This is an awesome review comment for testing!"
     );
@@ -163,52 +158,20 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
    await updateReviewCountCheck(page, expect);
-
-    // const initialRating = await page
-    //   .getByTestId("reviews-heading")
-    //   .getByTestId("review-count")
-    //   .textContent();
-    // const initialReviewCount = await page
-    //   .getByTestId("spot-callout-box")
-    //   .getByTestId("review-count")
-    //   .textContent();
-    // // await signUpUser(page);
-    // // await page.getByTestId("spot-tile").first().click();
-
-    // await page.getByTestId("review-button").click();
-    // await page
-    //   .getByPlaceholder("Leave your review here...")
-    //   .fill("This is an awesome review comment for testing!");
-    // await page.getByTestId("star-rating").locator("path").nth(4).click();
-    // await page
-    //   .getByRole("button", { name: "Submit Your Review" })
-    //   .click({ delay: 2000 });
-
-    // const updatedRating = await page
-    //   .getByTestId("reviews-heading")
-    //   .getByTestId("review-count")
-    //   .textContent();
-    // const updatedReviewCount = await page
-    //   .getByTestId("spot-callout-box")
-    //   .getByTestId("review-count")
-    //   .textContent();
-
-    // expect(updatedRating).not.toEqual(initialRating);
-    // expect(updatedReviewCount).not.toEqual(initialReviewCount);
   });
 
   test("Closing the modal resets any errors and clears all data entered. Once it reopens, it must be in the default state (no errors, empty inputs, button disabled).", async ({
     page,
   }) => {
     await signUpUser(page);
-    await page.getByTestId("spot-tile").first().click();
-    await page.getByTestId("review-button").click();
+    await page.getByTestId(SPOT_TILE_LOCATOR).first().click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
     await page.getByPlaceholder("Leave your review here...").fill("small");
     await expect(
       page.getByRole("button", { name: "Submit Your Review" })
     ).toBeDisabled();
     await page.mouse.click(0, 0);
-    await page.getByTestId("review-button").click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
     const textarea = page.getByPlaceholder("Leave your review here...");
     await expect(textarea).toHaveValue("");
     await expect(
@@ -220,13 +183,13 @@ test.describe("Feature: Post a Review", () => {
     page,
   }) => {
     await createSpotAndNoReviewUserOnPage(page)
-    await page.getByTestId("review-button").click();
+    await page.getByTestId(CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR).click();
 
     const title = await page.getByText("How was your stay?").boundingBox();
     const textarea = await page
       .getByPlaceholder("Leave your review here...")
       .boundingBox();
-    const starRating = await page.getByTestId("review-star-clickable").first().boundingBox();
+    const starRating = await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).first().boundingBox();
     const submitButton = await page
       .getByRole("button", { name: "Submit Your Review" })
       .boundingBox();

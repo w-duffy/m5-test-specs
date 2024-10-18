@@ -770,3 +770,5 @@ export async function createSpotAndSingleReviewLogInDemoUser(page){
   await page.goto(url);
   await page.waitForTimeout(2000);
 }
+
+
