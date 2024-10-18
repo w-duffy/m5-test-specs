@@ -9,8 +9,8 @@ This repository contains the test specs for the M5 project.  These tests are wri
 You can watch the walkthrough video on 2x speed in addition to the below instructions.
 
 ### Install Playwright and Dependencies
-- `npx playwright install --with-deps chromium`
 - `npm install`
+- `npx playwright install --with-deps chromium`
 
 ### Add Environment Variables
 Copy the `.env.example` file to a `.env` and add your test url:
