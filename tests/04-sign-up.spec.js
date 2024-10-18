@@ -163,7 +163,7 @@ test.describe('Feature: Sign Up', () => {
         await page.getByTestId(SIGN_UP_PASSWORD_INPUT_LOCATOR).fill(user.password);
         await page.getByTestId(SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR).fill(user.password);
         await page.getByTestId(SIGN_UP_FORM_BUTTON_LOCATOR).click();
-        page.waitForTimeout(2000);
+        await page.waitForTimeout(2000);
 
         await expect(page.getByTestId(PROFILE_BUTTON_LOCATOR)).toBeVisible();
         await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
