@@ -1,3 +1,5 @@
+// All of the values should be written as:
+// data-testid=<<user-menu-button>> //  For example: data-testid="user-menu-button"
 // Favicon and Logo
 export const FAVICON_LOCATOR = 'favicon'
 export const LOGO_LOCATOR = 'logo'
@@ -7,7 +9,7 @@ export const PROFILE_BUTTON_LOCATOR = 'user-menu-button'
 export const PROFILE_BUTTON_DROPDOWN_LOCATOR = 'user-dropdown-menu'
 
 // Login
-export const LOGIN_MODAL_LOCATOR = 'login-modal'
+export const LOGIN_MODAL_LOCATOR = 'login-modal' // container element
 export const LOGIN_CREDENTIAL_INPUT_LOCATOR = 'credential-input'
 export const LOGIN_PASSWORD_INPUT_LOCATOR = 'password-input'
 export const LOGIN_FORM_BUTTON_LOCATOR = 'login-button'
@@ -25,17 +27,19 @@ export const SIGN_UP_EMAIL_ERROR_MESSAGE_LOCATOR = 'email-error-message'
 export const SIGN_UP_USERNAME_ERROR_MESSAGE_LOCATOR = 'username-error-message'
 
 // Landing Page
-export const SPOT_LIST_LOCATOR = 'spots-list'
-export const SPOT_TILE_LOCATOR = 'spot-tile'
+export const SPOT_LIST_LOCATOR = 'spots-list' // container element
+export const SPOT_TILE_LOCATOR = 'spot-tile' // individual spot tile
+export const SPOT_LINK_TO_SPOT_PAGE_LOCATOR = 'spot-link' // this is the element that should link to the single spot page
 export const SPOT_THUMBNAIL_IMAGE_LOCATOR = 'spot-thumbnail-image'
 export const SPOT_CITY_LOCATOR = 'spot-city'
 export const SPOT_RATING_LOCATOR = 'spot-rating'
 export const SPOT_PRICE_LOCATOR = 'spot-price'
 export const SPOT_NAME_LOCATOR = 'spot-name'
 export const SPOT_TOOLTIP_LOCATOR = 'spot-tooltip' // this is the element that should display the spot name on hover
-export const SPOT_LINK_TO_SPOT_PAGE_LOCATOR = 'spot-link'
 
 // Spot Detail Page
+export const SPOT_DETAIL_PAGE_TILE_LOCATOR = 'spot-tile'
+export const SPOT_CALLOUT_BOX_LOCATOR = 'spot-callout-box'  // this is the box with the reserve button
 export const SPOT_HEADING_LOCATOR = 'spot-name'
 export const SPOT_DETAIL_PAGE_LOCATION_LOCATOR = 'spot-location'
 export const SPOT_DETAIL_PAGE_CITY_LOCATOR = 'spot-city'
@@ -43,10 +47,8 @@ export const SPOT_LARGE_IMAGE_LOCATOR = 'spot-large-image'
 export const SPOT_SMALL_IMAGE_LOCATOR = 'spot-small-image'
 export const SPOT_HOST_LOCATOR = 'spot-host'
 export const SPOT_DESCRIPTION_LOCATOR = 'spot-description'
-export const SPOT_CALLOUT_BOX_LOCATOR = 'spot-callout-box'
 export const SPOT_PRICE_DETAIL_PAGE_LOCATOR = 'spot-price'
 export const SPOT_RESERVE_BUTTON_LOCATOR = 'reserve-button'
-export const SPOT_DETAIL_PAGE_TILE_LOCATOR = 'spot-tile'
 export const SPOT_DETAIL_PAGE_RATING_LOCATOR = 'spot-rating'
 
 // Spot Detail Page -- Review Section

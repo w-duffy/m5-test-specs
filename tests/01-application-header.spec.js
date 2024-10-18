@@ -26,7 +26,7 @@ test.describe('Application Header', () => {
     const logo = page.getByTestId(LOGO_LOCATOR);
     await expect(logo).toBeVisible();
 
-    const authButtons = page.getByTestId(PROFILE_BUTTON_LOCATOR );
+    const authButtons = page.getByTestId(PROFILE_BUTTON_LOCATOR);
     await expect(authButtons).toBeVisible();
 
     await page.setViewportSize({ width: 768, height: 800 });

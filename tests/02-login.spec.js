@@ -6,7 +6,7 @@ test.describe("Feature: Log in", () => {
     await page.goto(process.env.STUDENT_URL);
   });
 
-  test('On every page of the site, a Profile button must be at the top-right of the page.  It should have have the attribute: data-testid=PROFILE_BUTTON_LOCATOR', async ({
+  test('On every page of the site, a Profile button must be at the top-right of the page.', async ({
     page,
   }) => {
     let profileButton = await page.getByTestId(PROFILE_BUTTON_LOCATOR);
