@@ -5,20 +5,20 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto(process.env.STUDENT_URL);
   });
-
-  test("On the landing page of the site, I should see a tile list of all the spots.", async ({
-    page,
-  }) => {
-    const spotsList = page.getByTestId(SPOT_LIST_LOCATOR);
+  test("On the landing page of the site, I should see a tile list of all the spots.", async ({ page }) => {
+    const spotsList = await page.getByTestId(SPOT_LIST_LOCATOR);
     await expect(spotsList).toBeVisible();
-    const spots = await page.getByTestId(SPOT_TILE_LOCATOR).all();
-    expect(spots.length).toBeGreaterThan(2);
-  });
 
+    const spotTileLocator = await page.getByTestId(SPOT_TILE_LOCATOR);
+    await spotTileLocator.first().waitFor({ state: 'visible' });
+
+    const spots = await spotTileLocator.all();
+    await expect(spots.length).toBeGreaterThan(2);
+  });
   test("Each spot tile in the tile list should have a thumbnail image, the city, and the state of the spot.", async ({
     page,
   }) => {
-    const firstSpot = page.getByTestId(SPOT_TILE_LOCATOR).first();
+    const firstSpot = await page.getByTestId(SPOT_TILE_LOCATOR).first();
     await expect(firstSpot.getByTestId( SPOT_THUMBNAIL_IMAGE_LOCATOR)).toBeVisible();
     await expect(firstSpot.getByTestId(SPOT_CITY_LOCATOR)).toBeVisible();
   });
@@ -36,7 +36,7 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
     page,
   }) => {
     const spots = await page.getByTestId(SPOT_TILE_LOCATOR).all();
-    for (const spot of spots) {
+    for await (const spot of spots) {
       const rating = await spot.getByTestId(SPOT_RATING_LOCATOR).textContent();
       expect(rating?.match(/New/i) || !isNaN(parseFloat(rating))).toBeTruthy();
     }
@@ -45,8 +45,8 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
   test('Each spot tile in the tile list should have the price for the spot followed by the label "night".', async ({
     page,
   }) => {
-    const firstSpot = page.getByTestId(SPOT_TILE_LOCATOR).first();
-    const priceElement = firstSpot.getByTestId(SPOT_PRICE_LOCATOR);
+    const firstSpot = await page.getByTestId(SPOT_TILE_LOCATOR).first();
+    const priceElement = await firstSpot.getByTestId(SPOT_PRICE_LOCATOR);
     await expect(priceElement).toBeVisible();
     const priceText = await priceElement.textContent();
     expect(priceText).toMatch(/\$\s?\d+(,\d{3})*(\.\d{2})?\s*(\/\s*)?night/);
@@ -55,7 +55,7 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
   test("Clicking any part of the spot tile should navigate to that spot's detail page.", async ({
     page,
   }) => {
-    const firstSpot = page.getByTestId(SPOT_TILE_LOCATOR).first();
+    const firstSpot = await page.getByTestId(SPOT_TILE_LOCATOR).first();
 
     // Using React Router's Link instead of a "div with an onClick + navigate" is ideal
     const linkToSpotPage = await firstSpot.getByTestId(SPOT_LINK_TO_SPOT_PAGE_LOCATOR);
@@ -70,7 +70,7 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
   test("The layout and element positioning is equivalent to the wireframes.", async ({
     page,
   }) => {
-    const spotsList = page.getByTestId(SPOT_LIST_LOCATOR);
+    const spotsList = await page.getByTestId(SPOT_LIST_LOCATOR);
     const spotsListBox = await spotsList.boundingBox();
 
     const viewportSize = page.viewportSize();

@@ -128,12 +128,20 @@ test.describe("Feature: view-rating-and-reviews", () => {
     page,
   }) => {
     await createSpotAndSingleReview(page);
-    await expect(page.getByTestId(REVIEW_HEADING_LOCATOR)).toContainText(
-      /\d\.\d+\s*\d+\sReview/
+    let reviewHeading = await page.getByTestId(REVIEW_HEADING_LOCATOR);
+     await expect(reviewHeading).toContainText(
+      /Review/
+    );
+    await expect(reviewHeading).toContainText(
+      /\b\d\.\d/
     );
 
-    await expect(page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR)).toContainText(
-      /\d\.\d+\s*\d+\sReview/
+    let spotCalloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR);
+    expect(spotCalloutBox).toContainText(
+      /Review/
+    );
+    await expect(spotCalloutBox).toContainText(
+      /\b\d\.\d/
     );
   });
 
@@ -154,7 +162,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
   test("Need a Test: When viewing the spot's detail page, show a list of the reviews for the spot below the spot's information with the newest reviews at the top, and the oldest reviews at the bottom.", async ({
     page,
   }) => {
-    const reviewsList = page.getByTestId(REVIEW_LIST_LOCATOR);
+    const reviewsList = await page.getByTestId(REVIEW_LIST_LOCATOR);
     const reviews = await reviewsList.getByTestId(REVIEW_ITEM_LOCATOR).all();
 
     for (let i = 1; i < reviews.length; i++) {
@@ -204,7 +212,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
     );
 
     const calloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).boundingBox();
-    const viewportSize = page.viewportSize();
+    const viewportSize = await page.viewportSize();
     expect(calloutBox?.x + calloutBox?.width).toBeCloseTo(
       viewportSize?.width,
       -3

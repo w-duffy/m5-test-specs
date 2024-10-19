@@ -11,10 +11,10 @@ test.describe('Feature: Create a New Spot', () => {
 
     test("There should be a 'Create a New Spot' button in the navigation bar to the left of the User Menu button for logged-in users", async ({ page }) => {
         await page.goto(process.env.STUDENT_URL);
-        const createSpotButton = page.getByText('Create a New Spot');
+        const createSpotButton = await page.getByText('Create a New Spot');
         await expect(createSpotButton).toBeVisible();
 
-        const userMenuButton = page.getByTestId(PROFILE_BUTTON_LOCATOR);
+        const userMenuButton = await page.getByTestId(PROFILE_BUTTON_LOCATOR);
         const createSpotBox = await createSpotButton.boundingBox();
         const userMenuBox = await userMenuButton.boundingBox();
         expect(createSpotBox?.x).toBeLessThan(userMenuBox?.x);

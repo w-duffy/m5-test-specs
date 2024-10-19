@@ -23,7 +23,7 @@ test.describe("Feature: Manage Spots", () => {
     await createSpot(page);
     await page.goto(`${process.env.STUDENT_URL}/spots/current`);
 
-    const heading = page.getByRole('heading', { name: 'Manage Spots' });
+    const heading = await page.getByRole('heading', { name: 'Manage Spots' });
     await expect(heading).toBeVisible();
   });
 
@@ -43,7 +43,7 @@ test.describe("Feature: Manage Spots", () => {
     await createSpot(page);
     await page.goto(`${process.env.STUDENT_URL}/spots/current`);
 
-    const spotTile = page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first();
+    const spotTile = await page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first();
     await expect(spotTile.getByTestId(SPOT_THUMBNAIL_IMAGE_LOCATOR)).toBeVisible();
     await expect(spotTile.getByTestId(SPOT_CITY_LOCATOR)).toBeVisible();
     await expect(spotTile.getByTestId(SPOT_RATING_LOCATOR)).toBeVisible();
@@ -55,9 +55,9 @@ test.describe("Feature: Manage Spots", () => {
     await createSpot(page);
     await page.goto(`${process.env.STUDENT_URL}/spots/current`);
 
-    const spotTile = page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first();
-    const updateButton = spotTile.getByRole('button', { name: 'Update' });
-    const deleteButton = spotTile.getByRole('button', { name: 'Delete' });
+    const spotTile = await page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first();
+    const updateButton = await spotTile.getByRole('button', { name: 'Update' });
+    const deleteButton = await spotTile.getByRole('button', { name: 'Delete' });
 
     await expect(updateButton).toBeVisible();
     await expect(deleteButton).toBeVisible();
@@ -73,7 +73,7 @@ test.describe("Feature: Manage Spots", () => {
     await createSpot(page);
     await page.goto(`${process.env.STUDENT_URL}/spots/current`);
 
-    const spotTile = page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first();
+    const spotTile = await page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first();
 // Using React Router's Link instead of a "div with an onClick + navigate" is ideal
 const linkToSpotPage = await spotTile.getByTestId(SPOT_LINK_TO_SPOT_PAGE_LOCATOR);
 const spotId = await linkToSpotPage.getAttribute("href"); // the href here can be added to your ele that has an onClick if you didn't use Link
