@@ -94,7 +94,6 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
       .getByTestId( SPOT_THUMBNAIL_IMAGE_LOCATOR)
       .boundingBox();
     const city = await firstSpot.getByTestId(SPOT_CITY_LOCATOR).boundingBox();
-    // const state = await firstSpot.getByTestId('spot-state').boundingBox();
 
     const rating = await firstSpot.getByTestId(SPOT_RATING_LOCATOR).boundingBox()
 
@@ -102,8 +101,6 @@ test.describe("Feature: Landing Page - List of All Spots", () => {
 
     expect(thumbnail?.y).toBeLessThan(city.y);
 
-    // TODO: Checking city and state ... issue when city and state share the same container
-    // expect(Math.abs(city.y - state.y)).toBeLessThan(5);
 
     expect(rating?.y).toBeGreaterThanOrEqual(city.y);
 

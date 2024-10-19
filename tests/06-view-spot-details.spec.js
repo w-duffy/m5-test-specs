@@ -52,6 +52,8 @@ test.describe('Feature: View Spot Details', () => {
     test('When the "Reserve" button on the spot\'s detail page is clicked, it should open an alert with the text "Feature coming soon".', async ({ page }) => {
         const reserveButton = await page.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR);
 
+        // clicking the reserve button should trigger a window alert.
+        // the alert should say "Feature coming soon"
 
         page.once('dialog', async dialog => {
             expect(dialog.type()).toBe('alert');
