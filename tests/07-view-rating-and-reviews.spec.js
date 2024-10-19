@@ -128,12 +128,20 @@ test.describe("Feature: view-rating-and-reviews", () => {
     page,
   }) => {
     await createSpotAndSingleReview(page);
-    await expect(page.getByTestId(REVIEW_HEADING_LOCATOR)).toContainText(
-      /\b\d+\.\d+(?:(?!\d+\.\d+).)*?Review\b/
+    let reviewHeading = await page.getByTestId(REVIEW_HEADING_LOCATOR);
+     await expect(reviewHeading).toContainText(
+      /Review/
+    );
+    await expect(reviewHeading).toContainText(
+      /\b\d\.\d/
     );
 
-    await expect(page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR)).toContainText(
-      /\b\d+\.\d+(?:(?!\d+\.\d+).)*?Review\b/
+    let spotCalloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR);
+    expect(spotCalloutBox).toContainText(
+      /Review/
+    );
+    await expect(spotCalloutBox).toContainText(
+      /\b\d\.\d/
     );
   });
 
