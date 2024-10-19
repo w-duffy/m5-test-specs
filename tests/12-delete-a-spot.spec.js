@@ -13,7 +13,7 @@ test.describe("Feature: Delete a Spot", () => {
 
     await page.getByTestId(SPOT_DETAIL_PAGE_TILE_LOCATOR).first().getByRole('button', { name: 'Delete' }).click();
 
-    const modal = page.getByTestId(DELETE_A_SPOT_MODAL_LOCATOR);
+    const modal = await page.getByTestId(DELETE_A_SPOT_MODAL_LOCATOR);
     await expect(modal).toBeVisible();
 
     await expect(modal.getByRole('heading', { name: 'Confirm Delete' })).toBeVisible();
@@ -62,7 +62,7 @@ test.describe("Feature: Delete a Spot", () => {
     await page.waitForTimeout(1000);
 
     await page.goto(`${process.env.STUDENT_URL}/`);
-    const firstSpotCheck = page.getByTestId(SPOT_TILE_LOCATOR).first();
+    const firstSpotCheck = await page.getByTestId(SPOT_TILE_LOCATOR).first();
 
         // Using React Router's Link instead of a "div with an onClick + navigate" is ideal
         const linkToSpotPage2 = await firstSpotCheck.getByTestId(SPOT_LINK_TO_SPOT_PAGE_LOCATOR);

@@ -22,7 +22,7 @@ test.describe('Feature: View Spot Details', () => {
         // looking for: city, state, country
         expect(locationText).toMatch(/[\w\s]+,\s[\w\s]+,\s[\w\s]+/);
 
-        const largeImage = page.getByTestId(SPOT_LARGE_IMAGE_LOCATOR);
+        const largeImage = await page.getByTestId(SPOT_LARGE_IMAGE_LOCATOR);
         await expect(largeImage).toBeVisible();
         const smallImages = await page.getByTestId(SPOT_SMALL_IMAGE_LOCATOR).all();
         expect(smallImages.length).toBe(4);
@@ -37,20 +37,20 @@ test.describe('Feature: View Spot Details', () => {
     });
 
     test('The callout information box on the right of the spot\'s detail page should state the price for the spot followed by the label "night", and have a "Reserve" button.', async ({ page }) => {
-        const calloutBox = page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR);
+        const calloutBox = await page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR);
 
-        const priceElement = calloutBox.getByTestId( SPOT_PRICE_DETAIL_PAGE_LOCATOR);
+        const priceElement = await calloutBox.getByTestId( SPOT_PRICE_DETAIL_PAGE_LOCATOR);
         await expect(priceElement).toBeVisible();
         const priceText = await priceElement.textContent();
         expect(priceText).toMatch(/\$\s?\d+(,\d{3})*(\.\d{2})?\s*(\/\s*)?night/);
 
-        const reserveButton = calloutBox.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR);
+        const reserveButton = await calloutBox.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR);
         await expect(reserveButton).toBeVisible();
         expect(await reserveButton.textContent()).toBe('Reserve');
     });
 
     test('When the "Reserve" button on the spot\'s detail page is clicked, it should open an alert with the text "Feature coming soon".', async ({ page }) => {
-        const reserveButton = page.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR);
+        const reserveButton = await page.getByTestId(SPOT_RESERVE_BUTTON_LOCATOR);
 
 
         page.once('dialog', async dialog => {
