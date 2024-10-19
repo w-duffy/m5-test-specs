@@ -19,7 +19,7 @@ Copy the `.env.example` file to a `.env` and add your test url:
 ### Use the Specs Locally
 Start by running your backend and frontend.  The starter comes with the `STUDENT_URL` env variable set to `http://localhost:5173`.  So ensure your dev server is on this port or modify your `.env` if it's not.
 
-You do not need to retest this test suite in production.  Render's compute power on their free tier might get overwhelemed if you're running the specs in parallel, leading to flaky results.  So you can run the specs locally to confirm you're getting points, and then push your code to production when you're done. (Remember to run `npm run build` before pushing to production).
+You do not need to retest this test suite in production.  You can run the specs locally to confirm you're getting points, and then push your code to production when you're done. (Remember to run `npm run build` before pushing to production).
 
 
 ### Running the tests
