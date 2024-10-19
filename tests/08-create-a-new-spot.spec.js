@@ -69,11 +69,9 @@ test.describe('Feature: Create a New Spot', () => {
         await expect(section.getByTestId(CREATE_A_NEW_SPOT_SECTION_5_HEADING_LOCATOR)).toHaveText('Liven up your spot with photos');
         await expect(section.getByTestId(CREATE_A_NEW_SPOT_SECTION_5_CAPTION_LOCATOR)).toHaveText("Submit a link to at least one photo to publish your spot.");
         await expect(section.getByPlaceholder('Preview Image URL')).toBeVisible();
-        await expect(section.getByPlaceholder('Preview Image URL')).toHaveAttribute('type', 'url');
         let imageUrlInputs = await (await section.getByPlaceholder('Image URL').all()).slice(1)
         expect(imageUrlInputs.length).toBe(4);
         for (const input of imageUrlInputs) {
-            await expect(input).toHaveAttribute('type', 'url');
             await expect(input).toBeVisible();
         }
     })

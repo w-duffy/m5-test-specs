@@ -1,5 +1,14 @@
-// adds consts
 import { SPOT_CALLOUT_BOX_LOCATOR, REVIEW_HEADING_LOCATOR, REVIEW_COUNT_LOCATOR, SIGN_UP_EMAIL_INPUT_LOCATOR, SPOT_TILE_LOCATOR, CREATE_A_REVIEW_OPEN_MODAL_BUTTON_LOCATOR, SIGN_UP_PASSWORD_INPUT_LOCATOR, SIGN_UP_FORM_BUTTON_LOCATOR, SIGN_UP_CONFIRM_PASSWORD_INPUT_LOCATOR, SIGN_UP_USERNAME_INPUT_LOCATOR, SIGN_UP_LAST_NAME_INPUT_LOCATOR, PROFILE_BUTTON_LOCATOR, DEMO_USER_LOGIN_BUTTON_LOCATOR, CREATE_NEW_SPOT_BUTTON_LOCATOR, SIGN_UP_FIRST_NAME_INPUT_LOCATOR, LOGIN_CREDENTIAL_INPUT_LOCATOR, LOGIN_PASSWORD_INPUT_LOCATOR, LOGIN_FORM_BUTTON_LOCATOR, CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR } from './contants';
+
+
+/*
+This file simply contains helper functions to do things like create a unique user, login a user, and create a spot.
+These functions will not work until you've completed the earlier steps.
+
+For example, a helper function called loginDemoUser() will expect that you've already completed the steps needed
+to login a demo user.
+*/
+
 export function createUniqueUser() {
   return {
     firstName: "Fakey",
@@ -18,7 +27,7 @@ export function generateUniqueUsername() {
   return `${letters}${numbers}${timestamp}`;
 }
 
-export async function createSpotAndSingleReview(page){
+export async function createSpotAndSingleReview(page) {
   const dummyData = createUniqueUser();
   await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
@@ -35,9 +44,9 @@ export async function createSpotAndSingleReview(page){
   await page.getByPlaceholder("City").fill(`Fort ${dummyData.username}`);
   await page.getByPlaceholder("State").click();
   await page.getByPlaceholder("State").fill(`New ${dummyData.username}`);
-  await page.getByPlaceholder("Please write at least 30").click();
+  await page.getByPlaceholder("Please write at least 30 characters").click();
   await page
-    .getByPlaceholder("Please write at least 30")
+    .getByPlaceholder("Please write at least 30 characters")
     .fill(
       `Great Spot! ${dummyData.username} ${dummyData.username}. See you there!`
     );
@@ -116,9 +125,9 @@ export async function createSpotAndSingleReview(page){
     .fill("Nice spot!!!!!!!!!");
 
 
-    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
-      await star.click();
-    }
+  for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
+    await star.click();
+  }
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
   page.waitForTimeout(1000);
@@ -160,9 +169,9 @@ export async function createSpot(page, dummyData = createUniqueUser()) {
   await page.getByPlaceholder("City").fill("Fake City");
   await page.getByPlaceholder("State").click();
   await page.getByPlaceholder("State").fill("Texas");
-  await page.getByPlaceholder("Please write at least 30").click();
+  await page.getByPlaceholder("Please write at least 30 characters").click();
   await page
-    .getByPlaceholder("Please write at least 30")
+    .getByPlaceholder("Please write at least 30 characters")
     .fill("This is a great fake spot for testing reviews");
   await page.getByPlaceholder("Name of your spot").click();
   await page
@@ -215,9 +224,9 @@ export async function createReview(page) {
   await page
     .getByPlaceholder("Leave your review here...")
     .fill(`This is an awesome review comment for testing! ${reviewDetails}`);
-    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
-      await star.click();
-    }
+  for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
+    await star.click();
+  }
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 }
 
@@ -251,9 +260,9 @@ export async function createReviewByDemo(page) {
     .getByPlaceholder("Leave your review here...")
     .fill(`This is an awesome review comment for testing! ${reviewDetails}`);
 
-    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
-      await star.click();
-    }
+  for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
+    await star.click();
+  }
 
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
@@ -273,7 +282,7 @@ export async function createReviewByDemo(page) {
 
 
 
-export async function encapsulateSpotCreation(page, dummyData = createUniqueUser()){
+export async function encapsulateSpotCreation(page, dummyData = createUniqueUser()) {
   await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
   await page.getByTestId(DEMO_USER_LOGIN_BUTTON_LOCATOR).click();
@@ -289,9 +298,9 @@ export async function encapsulateSpotCreation(page, dummyData = createUniqueUser
   await page.getByPlaceholder("City").fill(`Fort ${dummyData.username}`);
   await page.getByPlaceholder("State").click();
   await page.getByPlaceholder("State").fill(`New ${dummyData.username}`);
-  await page.getByPlaceholder("Please write at least 30").click();
+  await page.getByPlaceholder("Please write at least 30 characters").click();
   await page
-    .getByPlaceholder("Please write at least 30")
+    .getByPlaceholder("Please write at least 30 characters")
     .fill(
       `Great Spot! ${dummyData.username} ${dummyData.username}. See you there!`
     );
@@ -341,7 +350,7 @@ export async function encapsulateSpotCreation(page, dummyData = createUniqueUser
 
 
 
-export async function encapsulateUserCreation(page){
+export async function encapsulateUserCreation(page) {
   const dummyData = createUniqueUser();
   await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByRole("button", { name: "Log Out" }).click();
@@ -365,7 +374,7 @@ export async function encapsulateUserCreation(page){
   await page.getByTestId(SIGN_UP_FORM_BUTTON_LOCATOR).click()
 }
 
-export async function createSpotAndMultiReviews(page){
+export async function createSpotAndMultiReviews(page) {
 
   const dummyData2 = createUniqueUser();
   await encapsulateSpotCreation(page, dummyData2)
@@ -380,9 +389,9 @@ export async function createSpotAndMultiReviews(page){
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
-      await star.click();
-    }
+  for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
+    await star.click();
+  }
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 
@@ -395,9 +404,9 @@ export async function createSpotAndMultiReviews(page){
   await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
-    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
-      await star.click();
-    }
+  for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
+    await star.click();
+  }
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
 }
@@ -405,7 +414,7 @@ export async function createSpotAndMultiReviews(page){
 
 
 
-export async function createSpotAndNoReview(page){
+export async function createSpotAndNoReview(page) {
   const dummyData = createUniqueUser();
   await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
@@ -421,9 +430,9 @@ export async function createSpotAndNoReview(page){
   await page.getByPlaceholder("City").fill(`Fort ${dummyData.username}`);
   await page.getByPlaceholder("State").click();
   await page.getByPlaceholder("State").fill(`New ${dummyData.username}`);
-  await page.getByPlaceholder("Please write at least 30").click();
+  await page.getByPlaceholder("Please write at least 30 characters").click();
   await page
-    .getByPlaceholder("Please write at least 30")
+    .getByPlaceholder("Please write at least 30 characters")
     .fill(
       `Great Spot! ${dummyData.username} ${dummyData.username}. See you there!`
     );
@@ -498,7 +507,7 @@ export async function createSpotAndNoReview(page){
 }
 
 
-export async function createSpotAndNoReviewUserOnPage(page){
+export async function createSpotAndNoReviewUserOnPage(page) {
   const dummyData = createUniqueUser();
   await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
@@ -514,9 +523,9 @@ export async function createSpotAndNoReviewUserOnPage(page){
   await page.getByPlaceholder("City").fill(`Fort ${dummyData.username}`);
   await page.getByPlaceholder("State").click();
   await page.getByPlaceholder("State").fill(`New ${dummyData.username}`);
-  await page.getByPlaceholder("Please write at least 30").click();
+  await page.getByPlaceholder("Please write at least 30 characters").click();
   await page
-    .getByPlaceholder("Please write at least 30")
+    .getByPlaceholder("Please write at least 30 characters")
     .fill(
       `Great Spot! ${dummyData.username} ${dummyData.username}. See you there!`
     );
@@ -602,7 +611,7 @@ export async function createSpotAndNoReviewUserOnPage(page){
 
 
 
-export async function updateReviewCountCheck(page, expect){
+export async function updateReviewCountCheck(page, expect) {
 
   const dummyData2 = createUniqueUser();
   await encapsulateSpotCreation(page, dummyData2)
@@ -619,20 +628,20 @@ export async function updateReviewCountCheck(page, expect){
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
 
-    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
-      await star.click();
-    }
+  for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
+    await star.click();
+  }
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
   await page.waitForTimeout(2000);
   const initialRating = await page
-  .getByTestId(REVIEW_HEADING_LOCATOR)
-  .getByTestId(REVIEW_COUNT_LOCATOR)
-  .textContent();
-const initialReviewCount = await page
-  .getByTestId(SPOT_CALLOUT_BOX_LOCATOR)
-  .getByTestId(REVIEW_COUNT_LOCATOR)
-  .textContent();
+    .getByTestId(REVIEW_HEADING_LOCATOR)
+    .getByTestId(REVIEW_COUNT_LOCATOR)
+    .textContent();
+  const initialReviewCount = await page
+    .getByTestId(SPOT_CALLOUT_BOX_LOCATOR)
+    .getByTestId(REVIEW_COUNT_LOCATOR)
+    .textContent();
 
   await encapsulateUserCreation(page)
   await page.waitForTimeout(2000);
@@ -644,31 +653,31 @@ const initialReviewCount = await page
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
 
-    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
-      await star.click();
-    }
+  for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
+    await star.click();
+  }
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
   await page.waitForTimeout(2000);
 
   const updatedRating = await page
-  .getByTestId(REVIEW_HEADING_LOCATOR)
-  .getByTestId(REVIEW_COUNT_LOCATOR)
-  .textContent();
-const updatedReviewCount = await page
-  .getByTestId(SPOT_CALLOUT_BOX_LOCATOR)
-  .getByTestId(REVIEW_COUNT_LOCATOR)
-  .textContent();
+    .getByTestId(REVIEW_HEADING_LOCATOR)
+    .getByTestId(REVIEW_COUNT_LOCATOR)
+    .textContent();
+  const updatedReviewCount = await page
+    .getByTestId(SPOT_CALLOUT_BOX_LOCATOR)
+    .getByTestId(REVIEW_COUNT_LOCATOR)
+    .textContent();
 
-expect(updatedRating).not.toEqual(initialRating);
-expect(updatedReviewCount).not.toEqual(initialReviewCount);
+  expect(updatedRating).not.toEqual(initialRating);
+  expect(updatedReviewCount).not.toEqual(initialReviewCount);
 }
 
 
 
 
 
-export async function createSpotAndSingleReviewLogInDemoUser(page){
+export async function createSpotAndSingleReviewLogInDemoUser(page) {
   const dummyData = createUniqueUser();
   await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
   await page.getByText("Log In").click();
@@ -684,9 +693,9 @@ export async function createSpotAndSingleReviewLogInDemoUser(page){
   await page.getByPlaceholder("City").fill(`Fort ${dummyData.username}`);
   await page.getByPlaceholder("State").click();
   await page.getByPlaceholder("State").fill(`New ${dummyData.username}`);
-  await page.getByPlaceholder("Please write at least 30").click();
+  await page.getByPlaceholder("Please write at least 30 characters").click();
   await page
-    .getByPlaceholder("Please write at least 30")
+    .getByPlaceholder("Please write at least 30 characters")
     .fill(
       `Great Spot! ${dummyData.username} ${dummyData.username}. See you there!`
     );
@@ -763,9 +772,9 @@ export async function createSpotAndSingleReviewLogInDemoUser(page){
     .getByPlaceholder("Leave your review here...")
     .fill("Nice spot!!!!!!!!!");
 
-    for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
-      await star.click();
-    }
+  for (let star of await page.getByTestId(CREATE_A_REVIEW_CLICKABLE_STAR_LOCATOR).all()) {
+    await star.click();
+  }
 
   await page.getByRole("button", { name: "Submit Your Review" }).click();
   await logOutUser(page);

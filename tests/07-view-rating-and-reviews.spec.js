@@ -150,7 +150,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
   }) => {
     const dummyData = createUniqueUser();
     await encapsulateSpotCreation(page, dummyData);
-    // page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
     await expect(
       page.getByTestId(SPOT_CALLOUT_BOX_LOCATOR).getByRole("paragraph")
     ).not.toContainText("Review");

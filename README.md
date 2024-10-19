@@ -16,23 +16,21 @@ You can watch the walkthrough video on 2x speed in addition to the below instruc
 Copy the `.env.example` file to a `.env` and add your test url:
 - `cp .env.example .env`
 
+### Use the Specs Locally
+Start by running your backend and frontend.  The starter comes with the `STUDENT_URL` env variable set to `http://localhost:5173`.  So ensure your dev server is on this port or modify your `.env` if it's not.
 
-### Local vs Prod Testing
-If you're testing locally, start by running your backend and frontend.
-- You'll need ensure your app is running before running the test specs.
-
-The `.env` should point to either your local dev server, or your Render URL.
-- The starter comes with the `STUDENT_URL` set to `http://localhost:5173`.
-- You can change this to your Render url.  Note the lack of a trailing slash.
+You do not need to retest this test suite in production.  Render's compute power on their free tier might get overwhelemed if you're running the specs in parallel, leading to flaky results.  So you can run the specs locally to confirm you're getting points, and then push your code to production when you're done. (Remember to run `npm run build` before pushing to production).
 
 
 ### Running the tests
 > ⚠️ Before running the below command, please read the below section on adding test identifiers.
 - `npx playwright test --ui`
 
-## Adding Test Identifiers ⭐
+## ⭐ Adding Test Identifiers ⭐
 
 Since everyone's project will be different, we can add attributes to elements so that Playwright can easily identify your interactive elements.
+
+### 💡Every Identifier you need is in the `constants.js` file.
 
 To add test identifiers, use the `data-testid` attribute.  To find the identifiers you'll need, you can check the test spec files in the `tests` directory.
 
@@ -83,9 +81,28 @@ await page.getByTestId('login-button').click()
 > 💡Enable Dark Mode
 ![dark mode](./screenshots/darkmode.png)
 
-Click the green arrow circled in the screenshot below to run all tests:
+
+## 🌟Before you start, read the section above regarding identifiers if you haven't already.🌟
+
+Begin by only running individual tests for any given section to build up your familiarity with how they work, and what's happening in the section.
+
+![alt text](./screenshots/start-with-this.png)
+
+---
+
+Once you start feeling comfortable with a section, you can move up to the group of tests for the section.
+
+![alt text](./screenshots/run-a-section.png)
+
+---
+
+### **Important**: Prefer running the tests individually or in smaller groups, instead of running the entire suite of tests.
+
+Once you are comfortable working with the specs, you can click the green arrow circled in the screenshot below to run all tests:
 
 ![alt text](./screenshots/image.png)
+
+---
 
 Here is a screenshot where all tests are passing:
 
@@ -101,10 +118,8 @@ Rerun failed tests by clicking the green arrow circled in the screenshot below.
 
 ![alt text](./screenshots/image-2.png)
 
+---
+
  You can also rerun all tests for a spec by clicking the play button next to the spec name.
 
 ![alt text](./screenshots/image-3.png)
-
-## Report Issues
-
-If you find any issues with the tests, please DM me the details 🙏

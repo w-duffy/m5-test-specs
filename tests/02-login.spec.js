@@ -9,16 +9,19 @@ test.describe("Feature: Log in", () => {
   test('On every page of the site, a Profile button must be at the top-right of the page.', async ({
     page,
   }) => {
+    // there should be a profile button on every page
     let profileButton = await page.getByTestId(PROFILE_BUTTON_LOCATOR);
     await expect(profileButton).toBeVisible();
   });
 
   test('The menu must contain a "Log in" menu option.', async ({ page }) => {
+    // if a user clicks the button, there should be text "Log in" visible on the page
     await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
     await expect(page.getByText("Log in")).toBeVisible();
   });
 
   test('The menu must contain a "Sign up" menu option.', async ({ page }) => {
+    // if a user clicks the button, there should be text "Sign up" visible on the page
     await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
     await expect(page.getByText("Sign up")).toBeVisible();
   });
@@ -26,8 +29,10 @@ test.describe("Feature: Log in", () => {
   test('Upon clicking the "Log in" menu option, it opens a modal pop-up that prompts the Username and Password input boxes and a "Log in" button.', async ({
     page,
   }) => {
+    // clicking "Log in" should open a modal
     await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
     await page.getByText("Log in").click();
+    // The Login Modal should be visible and have the correct input elements
     await expect(page.getByTestId(LOGIN_MODAL_LOCATOR)).toBeVisible();
     await expect(page.getByTestId(LOGIN_CREDENTIAL_INPUT_LOCATOR)).toBeVisible();
     await expect(page.getByTestId(LOGIN_PASSWORD_INPUT_LOCATOR)).toBeVisible();
@@ -43,10 +48,13 @@ test.describe("Feature: Log in", () => {
     const loginButton = page.getByTestId("login-button");
     await expect(loginButton).toBeDisabled();
 
+
+  // button should be disabled if the username is less than 4 characters and the password is less than 6 characters
     await page.getByTestId("credential-input").fill("abc");
     await page.getByTestId(LOGIN_PASSWORD_INPUT_LOCATOR).fill("12345");
     await expect(loginButton).toBeDisabled();
 
+    // button should be enabled if the username is greater than 3 characters and the password is greater than 5 characters
     await page.getByTestId("credential-input").fill("abcd");
     await expect(loginButton).toBeDisabled();
 
@@ -60,8 +68,9 @@ test.describe("Feature: Log in", () => {
     await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
     await page.getByText("Log in").click();
 
-    await page.getByTestId(LOGIN_CREDENTIAL_INPUT_LOCATOR).fill("invaliduser");
-    await page.getByTestId(LOGIN_PASSWORD_INPUT_LOCATOR).fill("invalidpass");
+    // made up username and password
+    await page.getByTestId(LOGIN_CREDENTIAL_INPUT_LOCATOR).fill("thisIsAFakeUsername");
+    await page.getByTestId(LOGIN_PASSWORD_INPUT_LOCATOR).fill("ThisIsAFakePassword");
     await page.getByTestId("login-button").click();
 
     await expect(
@@ -76,6 +85,17 @@ test.describe("Feature: Log in", () => {
     await page.getByTestId(PROFILE_BUTTON_LOCATOR).click();
     await page.getByText("Log in").click();
 
+
+    // you need to have the below demo user seeded in your database
+    /*Here's what you can add in your user seeder:
+      {
+        firstName: 'Demo',
+        lastName: 'Lition',
+        email: 'demo@user.io',
+        username: 'Demo-lition',
+        hashedPassword: bcrypt.hashSync('password')
+      },
+    */
     await page.getByTestId(LOGIN_CREDENTIAL_INPUT_LOCATOR).fill("demo@user.io");
     await page.getByTestId(LOGIN_PASSWORD_INPUT_LOCATOR).fill("password");
     await page.getByTestId("login-button").click();
@@ -180,10 +200,11 @@ test.describe("Feature: Log in", () => {
     const passwordBoundingBox = await passwordInput.boundingBox();
     const loginButtonBoundingBox = await loginButton.boundingBox();
 
+    // username is above the password input
     expect(usernameBoundingBox?.y).toBeLessThan(passwordBoundingBox.y);
-
+    // the login button is below the password input
     expect(loginButtonBoundingBox?.y).toBeGreaterThan(passwordBoundingBox.y);
-
+    
     expect(usernameBoundingBox?.x).toBeGreaterThan(modalBoundingBox.x);
     expect(passwordBoundingBox?.x).toBeGreaterThan(modalBoundingBox.x);
     expect(loginButtonBoundingBox?.x).toBeGreaterThan(modalBoundingBox.x);

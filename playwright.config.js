@@ -13,9 +13,9 @@ export default defineConfig({
   reporter: 'html',
   use: {
     baseURL: process.env.STUDENT_URL,
-    trace: 'on-first-retry',
-    screenshot: 'only-on-failure',
-    video: 'retain-on-failure',
+    // trace: 'on-first-retry',
+    // screenshot: 'only-on-failure',
+    // video: 'retain-on-failure',
   },
   projects: [
     {
