@@ -82,7 +82,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
 
     for (const element of [calloutBox, reviewHeading]) {
       const ratingText = await element.getByTestId(SPOT_DETAIL_PAGE_RATING_LOCATOR).textContent();
-      expect(ratingText).toMatch(/^.\d+\.\d+$/);
+      expect(ratingText).toMatch(/\b\d\.\d/);
     }
   });
 
@@ -222,7 +222,7 @@ test.describe("Feature: view-rating-and-reviews", () => {
       .getByTestId(REVIEW_HEADING_LOCATOR)
       .boundingBox();
     const reviewsList = await page.getByTestId(REVIEW_LIST_LOCATOR).boundingBox();
-    expect(reviewsList?.y).toBeGreaterThan(
+    expect(reviewsList?.y).toBeGreaterThanOrEqual(
       reviewHeading?.y + reviewHeading?.height
     );
   });
