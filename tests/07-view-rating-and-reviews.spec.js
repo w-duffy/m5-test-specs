@@ -222,8 +222,8 @@ test.describe("Feature: view-rating-and-reviews", () => {
       .getByTestId(REVIEW_HEADING_LOCATOR)
       .boundingBox();
     const reviewsList = await page.getByTestId(REVIEW_LIST_LOCATOR).boundingBox();
-    expect(reviewsList?.y).toBeGreaterThan(
-      reviewHeading?.y
+    expect(reviewsList?.y).toBeGreaterThanOrEqual(
+      reviewHeading?.y + reviewHeading?.height
     );
   });
 });
